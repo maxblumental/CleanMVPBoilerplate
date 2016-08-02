@@ -101,19 +101,18 @@ abstract public class BaseFragmentPresenter<T extends FragmentView> implements F
         asyncSubjectSubscriptions.unsubscribe();
     }
 
-    @SuppressWarnings("unchecked")
     protected <R> void observeInteractor(Observable<R> interactorObservable,
                                          Subscriber<R> subscriber) {
 
-        AsyncSubject<R> asyncSubject = AsyncSubject.<R>create();
+        AsyncSubject<R> asyncSubject = AsyncSubject.create();
 
         Subscription subscription = interactorObservable.subscribe(asyncSubject);
 
         asyncSubjectSubscriptions.add(subscription);
 
-        memento = new MementoImpl<R>();
-
-        ((Memento<R>) memento).store(asyncSubject, subscriber);
+        MementoImpl<R> memento = new MementoImpl<>();
+        memento.store(asyncSubject, subscriber);
+        this.memento = memento;
 
         interactorSubscriptions.add(
                 asyncSubject
