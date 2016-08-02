@@ -6,13 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blumental.maxim.cleanmvp.presenter.FragmentPresenter;
 
-abstract public class BaseFragment<T extends FragmentPresenter<? super FragmentView>> extends Fragment implements FragmentView {
+abstract public class BaseFragment<T extends FragmentPresenter<?>> extends Fragment implements FragmentView {
 
     public final String TAG = getClass().getName();
 
@@ -21,10 +22,11 @@ abstract public class BaseFragment<T extends FragmentPresenter<? super FragmentV
     protected abstract T getInjectedPresenter();
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onAttach(Context context) {
         super.onAttach(context);
         presenter = getInjectedPresenter();
-        presenter.onAttach(this);
+        ((FragmentPresenter<BaseFragment<T>>) presenter).onAttach(this);
     }
 
     @Override
@@ -90,7 +92,7 @@ abstract public class BaseFragment<T extends FragmentPresenter<? super FragmentV
     }
 
     @Override
-    public <T> void switchToFragment(Class<T> fragmentClass, Bundle args) {
+    public <R> void switchToFragment(Class<R> fragmentClass, Bundle args, boolean addToBackStack) {
         FragmentActivity activity = getActivity();
 
         if (activity == null) {
@@ -110,9 +112,16 @@ abstract public class BaseFragment<T extends FragmentPresenter<? super FragmentV
             }
         }
 
-        fragmentManager.beginTransaction()
-                .replace(getContainerViewId(), fragment, tag)
-                .commit();
+        fragment.setArguments(args);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction()
+                .replace(getContainerViewId(), fragment, tag);
+
+        if (addToBackStack) {
+            transaction = transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
     }
 
     protected abstract int getContainerViewId();

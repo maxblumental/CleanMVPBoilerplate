@@ -14,7 +14,7 @@ import rx.subscriptions.CompositeSubscription;
 
 abstract public class BaseFragmentPresenter<T extends FragmentView> implements FragmentPresenter<T> {
 
-    private T view;
+    protected T view;
 
     private CompositeSubscription viewSubscriptions;
 
