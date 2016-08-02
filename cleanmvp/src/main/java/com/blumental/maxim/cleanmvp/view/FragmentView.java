@@ -4,5 +4,5 @@ import android.os.Bundle;
 
 public interface FragmentView {
 
-    <T> void switchToFragment(Class<T> fragmnetClass, Bundle args);
+    <T> void switchToFragment(Class<T> fragmentClass, Bundle args);
 }

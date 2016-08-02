@@ -90,7 +90,7 @@ abstract public class BaseFragment<T extends FragmentPresenter<? super FragmentV
     }
 
     @Override
-    public <T> void switchToFragment(Class<T> fragmnetClass, Bundle args) {
+    public <T> void switchToFragment(Class<T> fragmentClass, Bundle args) {
         FragmentActivity activity = getActivity();
 
         if (activity == null) {
@@ -99,12 +99,12 @@ abstract public class BaseFragment<T extends FragmentPresenter<? super FragmentV
 
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
-        String tag = fragmnetClass.getName();
+        String tag = fragmentClass.getName();
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
 
         if (fragment == null) {
             try {
-                fragment = (Fragment) fragmnetClass.newInstance();
+                fragment = (Fragment) fragmentClass.newInstance();
             } catch (Exception e) {
                 return;
             }
