@@ -16,7 +16,6 @@ import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPrese
 import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.BASE_CURRENCY_KEY;
 import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.MONEY_LIST_KEY;
 
-
 public class ConvertedMoneyToBundle {
 
     @Inject

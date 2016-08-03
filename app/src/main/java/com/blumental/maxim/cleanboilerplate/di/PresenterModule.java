@@ -1,9 +1,7 @@
 package com.blumental.maxim.cleanboilerplate.di;
 
 import com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenterImpl;
 import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenterImpl;
 
 import javax.inject.Singleton;
 
@@ -16,12 +14,12 @@ public class PresenterModule {
     @Provides
     @Singleton
     ConvertedMoneyPresenter getConvertedMoneyPresenter() {
-        return new ConvertedMoneyPresenterImpl();
+        return new ConvertedMoneyPresenter();
     }
 
     @Provides
     @Singleton
     InputMoneyPresenter getInputMoneyPresenter() {
-        return new InputMoneyPresenterImpl();
+        return new InputMoneyPresenter();
     }
 }
