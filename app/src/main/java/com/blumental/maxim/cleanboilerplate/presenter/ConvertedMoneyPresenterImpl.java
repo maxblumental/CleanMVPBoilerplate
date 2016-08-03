@@ -11,7 +11,8 @@ import java.util.ArrayList;
 public class ConvertedMoneyPresenterImpl extends BaseFragmentPresenter<ConvertedMoneyView> implements ConvertedMoneyPresenter {
 
     @Override
-    public void onCreateView(Bundle args) {
+    protected void onActivityCreated() {
+        Bundle args = view.getArguments();
 
         double amount = args.getDouble(BASE_AMOUNT_KEY);
         view.setBaseAmount(Double.toString(amount));

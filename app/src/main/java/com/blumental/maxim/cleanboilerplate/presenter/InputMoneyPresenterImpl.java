@@ -21,7 +21,10 @@ import rx.functions.Action1;
 public class InputMoneyPresenterImpl extends BaseFragmentPresenter<InputMoneyView> implements InputMoneyPresenter {
 
     @Override
-    public void observeConvertButtonClicks(Observable<Void> observable) {
+    protected void onResume() {
+        super.onResume();
+
+        Observable<Void> observable = view.getConvertButtonClicks();
 
         observable.debounce(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

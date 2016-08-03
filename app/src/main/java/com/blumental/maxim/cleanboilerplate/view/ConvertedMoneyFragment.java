@@ -1,6 +1,7 @@
 package com.blumental.maxim.cleanboilerplate.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,15 +19,10 @@ import com.blumental.maxim.cleanmvp.view.BaseFragment;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ConvertedMoneyFragment extends BaseFragment<ConvertedMoneyPresenter> implements ConvertedMoneyView {
-
-    @Inject
-    ConvertedMoneyPresenter presenter;
+public class ConvertedMoneyFragment extends BaseFragment implements ConvertedMoneyView {
 
     @BindView(R.id.amountTextView)
     TextView amount;
@@ -39,25 +35,26 @@ public class ConvertedMoneyFragment extends BaseFragment<ConvertedMoneyPresenter
 
     @Override
     protected ConvertedMoneyPresenter getInjectedPresenter() {
-        App.getComponent().inject(this);
-        return presenter;
+        return App.component.convertedMoneyPresenter();
     }
 
-    @Nullable
+    @NonNull
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.converted_money_fragment, container, false);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
 
         moneyList.setLayoutManager(new LinearLayoutManager(getContext()));
         moneyList.setAdapter(new ConvertedMoneyAdapter());
 
-        Bundle arguments = getArguments();
-        presenter.onCreateView(arguments);
-
         return view;
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.converted_money_fragment;
     }
 
     @Override

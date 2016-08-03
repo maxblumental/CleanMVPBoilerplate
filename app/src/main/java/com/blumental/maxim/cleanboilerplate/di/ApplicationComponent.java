@@ -2,10 +2,10 @@ package com.blumental.maxim.cleanboilerplate.di;
 
 
 import com.blumental.maxim.cleanboilerplate.executor.ExecutorImpl;
+import com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter;
+import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
 import com.blumental.maxim.cleanboilerplate.repository.RepositoryImpl;
 import com.blumental.maxim.cleanboilerplate.repository.fixer_service.FixerServiceFactory;
-import com.blumental.maxim.cleanboilerplate.view.ConvertedMoneyFragment;
-import com.blumental.maxim.cleanboilerplate.view.InputMoneyFragment;
 
 import javax.inject.Singleton;
 
@@ -19,7 +19,7 @@ public interface ApplicationComponent {
 
     RepositoryImpl repository();
 
-    void inject(InputMoneyFragment fragment);
+    InputMoneyPresenter inputMoneyPresenter();
 
-    void inject(ConvertedMoneyFragment fragment);
+    ConvertedMoneyPresenter convertedMoneyPresenter();
 }

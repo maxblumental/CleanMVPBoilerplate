@@ -1,6 +1,7 @@
 package com.blumental.maxim.cleanboilerplate.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,9 @@ import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
 import com.blumental.maxim.cleanmvp.view.BaseFragment;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.View.GONE;
@@ -29,10 +29,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static com.jakewharton.rxbinding.view.RxView.clicks;
 
-public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implements InputMoneyView {
-
-    @Inject
-    InputMoneyPresenter presenter;
+public class InputMoneyFragment extends BaseFragment implements InputMoneyView {
 
     @BindView(R.id.amountEditText)
     EditText amount;
@@ -48,16 +45,16 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implem
 
     @Override
     protected InputMoneyPresenter getInjectedPresenter() {
-        App.getComponent().inject(this);
-        return presenter;
+        return App.component.inputMoneyPresenter();
     }
 
-    @Nullable
+    @NonNull
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.input_money_fragment, container, false);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
         ButterKnife.bind(this, view);
 
         CurrencyAdapter adapter = new CurrencyAdapter(getContext());
@@ -67,9 +64,8 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implem
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.observeConvertButtonClicks(clicks(convertButton));
+    protected int getLayoutResourceId() {
+        return R.layout.input_money_fragment;
     }
 
     @Override
@@ -122,5 +118,10 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implem
                     (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public Observable<Void> getConvertButtonClicks() {
+        return clicks(convertButton);
     }
 }

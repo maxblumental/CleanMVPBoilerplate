@@ -2,6 +2,8 @@ package com.blumental.maxim.cleanboilerplate.view;
 
 import com.blumental.maxim.cleanmvp.view.FragmentView;
 
+import rx.Observable;
+
 public interface InputMoneyView extends FragmentView {
 
     String getAmount();
@@ -19,4 +21,6 @@ public interface InputMoneyView extends FragmentView {
     void enableConvertButton();
 
     void hideKeyboard();
+
+    Observable<Void> getConvertButtonClicks();
 }
