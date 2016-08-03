@@ -28,19 +28,22 @@ import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.RESUME;
 import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.START;
 import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.STOP;
 
-abstract public class BaseFragment extends Fragment implements FragmentView {
+abstract public class BaseFragment<T extends FragmentPresenter<?>> extends Fragment implements FragmentView {
 
     public final String TAG = getClass().getName();
 
-    protected abstract FragmentPresenter<?> getInjectedPresenter();
+    protected abstract T getInjectedPresenter();
 
-    protected PublishSubject<LifecycleEvents> lifecycleSubject;
+    private PublishSubject<LifecycleEvents> lifecycleSubject;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        FragmentPresenter<?> presenter = getInjectedPresenter();
+        @SuppressWarnings("unchecked")
+        FragmentPresenter<FragmentView> presenter =
+                (FragmentPresenter<FragmentView>) getInjectedPresenter();
+
         presenter.setView(this);
 
         lifecycleSubject = PublishSubject.create();
@@ -60,7 +63,7 @@ abstract public class BaseFragment extends Fragment implements FragmentView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         lifecycleSubject.onNext(CREATE_VIEW);
-        return  inflater.inflate(getLayoutResourceId(), container, false);
+        return inflater.inflate(getLayoutResourceId(), container, false);
     }
 
     protected abstract int getLayoutResourceId();

@@ -7,7 +7,7 @@ import rx.Observable;
 
 public interface FragmentPresenter<T extends FragmentView> {
 
-    void setView(FragmentView view);
+    void setView(T view);
 
     void obseveLifecycle(Observable<LifecycleEvents> observable);
 }

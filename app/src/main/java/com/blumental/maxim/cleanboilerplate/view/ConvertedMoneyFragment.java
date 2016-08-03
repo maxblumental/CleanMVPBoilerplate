@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ConvertedMoneyFragment extends BaseFragment implements ConvertedMoneyView {
+public class ConvertedMoneyFragment extends BaseFragment<ConvertedMoneyPresenter> implements ConvertedMoneyView {
 
     @BindView(R.id.amountTextView)
     TextView amount;

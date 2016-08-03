@@ -29,7 +29,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static com.jakewharton.rxbinding.view.RxView.clicks;
 
-public class InputMoneyFragment extends BaseFragment implements InputMoneyView {
+public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implements InputMoneyView {
 
     @BindView(R.id.amountEditText)
     EditText amount;

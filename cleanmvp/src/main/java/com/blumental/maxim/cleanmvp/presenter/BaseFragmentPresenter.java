@@ -24,9 +24,8 @@ abstract public class BaseFragmentPresenter<T extends FragmentView> implements F
     private Memento<?> memento;
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void setView(FragmentView view) {
-        this.view = (T) view;
+    public void setView(T view) {
+        this.view = view;
     }
 
     @Override
