@@ -32,7 +32,7 @@ abstract public class BaseFragment<T extends FragmentPresenter<?>> extends Fragm
 
     public final String TAG = getClass().getName();
 
-    protected abstract T getInjectedPresenter();
+    protected abstract T getPresenter();
 
     private PublishSubject<LifecycleEvents> lifecycleSubject;
 
@@ -42,7 +42,7 @@ abstract public class BaseFragment<T extends FragmentPresenter<?>> extends Fragm
 
         @SuppressWarnings("unchecked")
         FragmentPresenter<FragmentView> presenter =
-                (FragmentPresenter<FragmentView>) getInjectedPresenter();
+                (FragmentPresenter<FragmentView>) getPresenter();
 
         presenter.setView(this);
 

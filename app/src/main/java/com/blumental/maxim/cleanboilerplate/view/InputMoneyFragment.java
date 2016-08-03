@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
-import com.blumental.maxim.cleanboilerplate.App;
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
@@ -44,8 +43,8 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implem
     ProgressBar progressBar;
 
     @Override
-    protected InputMoneyPresenter getInjectedPresenter() {
-        return App.component.inputMoneyPresenter();
+    protected InputMoneyPresenter getPresenter() {
+        return new InputMoneyPresenter();
     }
 
     @NonNull

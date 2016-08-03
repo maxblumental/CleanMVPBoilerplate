@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blumental.maxim.cleanboilerplate.App;
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.model.Money;
 import com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter;
@@ -34,8 +33,8 @@ public class ConvertedMoneyFragment extends BaseFragment<ConvertedMoneyPresenter
     RecyclerView moneyList;
 
     @Override
-    protected ConvertedMoneyPresenter getInjectedPresenter() {
-        return App.component.convertedMoneyPresenter();
+    protected ConvertedMoneyPresenter getPresenter() {
+        return new ConvertedMoneyPresenter();
     }
 
     @NonNull
