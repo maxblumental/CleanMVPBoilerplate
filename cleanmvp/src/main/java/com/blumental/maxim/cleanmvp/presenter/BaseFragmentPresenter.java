@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.blumental.maxim.cleanmvp.view.FragmentView;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.subjects.AsyncSubject;
@@ -102,22 +101,20 @@ abstract public class BaseFragmentPresenter<T extends FragmentView> implements F
     }
 
     protected <R> void observeInteractor(Observable<R> interactorObservable,
-                                         Subscriber<R> subscriber) {
+                                         SubscriberFactory<R> factory) {
 
         AsyncSubject<R> asyncSubject = AsyncSubject.create();
 
-        Subscription subscription = interactorObservable.subscribe(asyncSubject);
-
-        asyncSubjectSubscriptions.add(subscription);
+        interactorObservable.subscribe(asyncSubject);
 
         MementoImpl<R> memento = new MementoImpl<>();
-        memento.store(asyncSubject, subscriber);
+        memento.store(asyncSubject, factory);
         this.memento = memento;
 
         interactorSubscriptions.add(
                 asyncSubject
                         .doOnCompleted(nullOutMemento())
-                        .subscribe(subscriber)
+                        .subscribe(factory.create())
         );
     }
 

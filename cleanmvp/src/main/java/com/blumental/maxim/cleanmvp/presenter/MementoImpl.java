@@ -2,7 +2,6 @@ package com.blumental.maxim.cleanmvp.presenter;
 
 import android.support.annotation.NonNull;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.subjects.AsyncSubject;
@@ -11,16 +10,16 @@ class MementoImpl<T> implements Memento<T> {
 
     private AsyncSubject<T> asyncSubject;
 
-    private Subscriber<T> subscriber;
+    private SubscriberFactory<T> factory;
 
     private boolean hasElement;
 
     @Override
-    public void store(AsyncSubject<T> asyncSubject, Subscriber<T> subscriber) {
+    public void store(AsyncSubject<T> asyncSubject, SubscriberFactory<T> factory) {
 
         this.asyncSubject = asyncSubject;
 
-        this.subscriber = subscriber;
+        this.factory = factory;
 
         hasElement = true;
     }
@@ -36,14 +35,14 @@ class MementoImpl<T> implements Memento<T> {
 
         asyncSubject = null;
 
-        subscriber = null;
+        factory = null;
     }
 
     @Override
     public Subscription resubscribe() {
         return asyncSubject
                 .doOnCompleted(clearAction())
-                .subscribe(subscriber);
+                .subscribe(factory.create());
     }
 
     @NonNull

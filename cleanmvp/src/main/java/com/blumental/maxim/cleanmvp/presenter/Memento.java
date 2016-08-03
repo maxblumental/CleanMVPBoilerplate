@@ -1,12 +1,11 @@
 package com.blumental.maxim.cleanmvp.presenter;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.subjects.AsyncSubject;
 
 interface Memento<T> {
 
-    void store(AsyncSubject<T> asyncSubject, Subscriber<T> subscriber);
+    void store(AsyncSubject<T> asyncSubject, SubscriberFactory<T> factory);
 
     boolean hasElement();
 

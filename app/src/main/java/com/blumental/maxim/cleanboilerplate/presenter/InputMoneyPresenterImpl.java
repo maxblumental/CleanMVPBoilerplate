@@ -9,6 +9,7 @@ import com.blumental.maxim.cleanboilerplate.model.Money;
 import com.blumental.maxim.cleanboilerplate.view.ConvertedMoneyFragment;
 import com.blumental.maxim.cleanboilerplate.view.InputMoneyView;
 import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
+import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,16 +23,14 @@ public class InputMoneyPresenterImpl extends BaseFragmentPresenter<InputMoneyVie
     @Override
     public void observeConvertButtonClicks(Observable<Void> observable) {
 
-        addViewSubscription(
-                observable.debounce(1, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<Void>() {
-                            @Override
-                            public void call(Void aVoid) {
-                                handleConvertButtonClick();
-                            }
-                        })
-        );
+        observable.debounce(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        handleConvertButtonClick();
+                    }
+                });
     }
 
     private void handleConvertButtonClick() {
@@ -55,9 +54,13 @@ public class InputMoneyPresenterImpl extends BaseFragmentPresenter<InputMoneyVie
         Observable<Bundle> interactorObservable = interactor.run(money)
                 .map(ConvertedMoneyToBundle.map());
 
-        Subscriber<Bundle> subscriber = createConvertToAllCurrenciesSubscriber();
-
-        observeInteractor(interactorObservable, subscriber);
+        observeInteractor(interactorObservable,
+                new SubscriberFactory<Bundle>() {
+                    @Override
+                    public Subscriber<Bundle> create() {
+                        return createConvertToAllCurrenciesSubscriber();
+                    }
+                });
     }
 
     private void onWrongInput() {
