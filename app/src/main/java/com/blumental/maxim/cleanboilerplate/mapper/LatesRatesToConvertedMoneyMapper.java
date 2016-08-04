@@ -6,15 +6,9 @@ import com.blumental.maxim.cleanboilerplate.model.Money;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import rx.functions.Func1;
 
 public class LatesRatesToConvertedMoneyMapper {
-
-    @Inject
-    public LatesRatesToConvertedMoneyMapper() {
-    }
 
     public static Func1<LatestRates, ConvertedMoney> map(final double amount) {
         return new Func1<LatestRates, ConvertedMoney>() {

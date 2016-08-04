@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view;
+package com.blumental.maxim.cleanboilerplate.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
+import com.blumental.maxim.cleanboilerplate.view.activity.MainActivityView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
 import com.blumental.maxim.cleanmvp.view.BaseFragment;
 
@@ -28,7 +29,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static com.jakewharton.rxbinding.view.RxView.clicks;
 
-public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter> implements InputMoneyView {
+public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainActivityView> implements InputMoneyView {
 
     @BindView(R.id.amountEditText)
     EditText amount;

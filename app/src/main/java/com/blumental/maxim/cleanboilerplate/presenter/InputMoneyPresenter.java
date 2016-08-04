@@ -6,8 +6,9 @@ import android.support.annotation.NonNull;
 import com.blumental.maxim.cleanboilerplate.interactor.ConvertToAllCurrenciesInteractor;
 import com.blumental.maxim.cleanboilerplate.mapper.ConvertedMoneyToBundle;
 import com.blumental.maxim.cleanboilerplate.model.Money;
-import com.blumental.maxim.cleanboilerplate.view.ConvertedMoneyFragment;
-import com.blumental.maxim.cleanboilerplate.view.InputMoneyView;
+import com.blumental.maxim.cleanboilerplate.view.activity.MainActivityView;
+import com.blumental.maxim.cleanboilerplate.view.fragment.ConvertedMoneyFragment;
+import com.blumental.maxim.cleanboilerplate.view.fragment.InputMoneyView;
 import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
 import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 
@@ -18,7 +19,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView> {
+public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, MainActivityView> {
 
     @Override
     protected void onResume() {

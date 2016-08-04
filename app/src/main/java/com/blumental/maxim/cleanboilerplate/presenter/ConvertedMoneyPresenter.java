@@ -3,12 +3,13 @@ package com.blumental.maxim.cleanboilerplate.presenter;
 import android.os.Bundle;
 
 import com.blumental.maxim.cleanboilerplate.model.Money;
-import com.blumental.maxim.cleanboilerplate.view.ConvertedMoneyView;
+import com.blumental.maxim.cleanboilerplate.view.activity.MainActivityView;
+import com.blumental.maxim.cleanboilerplate.view.fragment.ConvertedMoneyView;
 import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
 
 import java.util.ArrayList;
 
-public class ConvertedMoneyPresenter extends BaseFragmentPresenter<ConvertedMoneyView> {
+public class ConvertedMoneyPresenter extends BaseFragmentPresenter<ConvertedMoneyView, MainActivityView> {
 
     public static final String MONEY_LIST_KEY = "money list key";
 

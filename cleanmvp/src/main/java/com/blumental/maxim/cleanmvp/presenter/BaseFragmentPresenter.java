@@ -3,6 +3,7 @@ package com.blumental.maxim.cleanmvp.presenter;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.blumental.maxim.cleanmvp.view.ActivityView;
 import com.blumental.maxim.cleanmvp.view.FragmentView;
 import com.blumental.maxim.cleanmvp.view.LifecycleEvents;
 
@@ -13,7 +14,7 @@ import rx.functions.Action1;
 import rx.subjects.AsyncSubject;
 import rx.subscriptions.CompositeSubscription;
 
-abstract public class BaseFragmentPresenter<T extends FragmentView> implements FragmentPresenter<T> {
+abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends ActivityView> implements FragmentPresenter<T> {
 
     protected T view;
 
@@ -165,5 +166,9 @@ abstract public class BaseFragmentPresenter<T extends FragmentView> implements F
             default:
                 throw new IllegalStateException("Unknown lifecycle event");
         }
+    }
+
+    protected V getActivity() {
+        return view.getActivityView();
     }
 }

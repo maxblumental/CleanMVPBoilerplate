@@ -27,8 +27,9 @@ import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.PAUSE;
 import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.RESUME;
 import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.START;
 import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.STOP;
+import static java.lang.String.format;
 
-abstract public class BaseFragment<T extends FragmentPresenter<?>> extends Fragment implements FragmentView {
+abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends ActivityView> extends Fragment implements FragmentView<V> {
 
     public final String TAG = getClass().getName();
 
@@ -150,4 +151,26 @@ abstract public class BaseFragment<T extends FragmentPresenter<?>> extends Fragm
     }
 
     protected abstract int getContainerViewId();
+
+    @Override
+    public V getActivityView() {
+
+        try {
+
+            @SuppressWarnings("unchecked")
+            V activity = (V) getActivity();
+
+            return activity;
+
+        } catch (ClassCastException exception) {
+
+            String fragmentClass = getClass().getSimpleName();
+            String activityClass = getActivity().getClass().getSimpleName();
+
+            String message = format("Wrong FragmentView parametrization! %s is not hosted by %s",
+                    fragmentClass, activityClass);
+
+            throw new IllegalStateException(message, exception);
+        }
+    }
 }

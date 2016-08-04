@@ -8,8 +8,6 @@ import com.blumental.maxim.cleanboilerplate.model.Money;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import rx.functions.Func1;
 
 import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.BASE_AMOUNT_KEY;
@@ -17,10 +15,6 @@ import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPrese
 import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.MONEY_LIST_KEY;
 
 public class ConvertedMoneyToBundle {
-
-    @Inject
-    public ConvertedMoneyToBundle() {
-    }
 
     public static Func1<ConvertedMoney, Bundle> map() {
         return new Func1<ConvertedMoney, Bundle>() {
