@@ -3,6 +3,7 @@ package com.blumental.maxim.cleanmvp.presenter;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.blumental.maxim.cleanmvp.view.ActivityLifecycleEvents;
 import com.blumental.maxim.cleanmvp.view.ActivityView;
 import com.blumental.maxim.cleanmvp.view.FragmentView;
 import com.blumental.maxim.cleanmvp.view.LifecycleEvents;
@@ -14,13 +15,15 @@ import rx.functions.Action1;
 import rx.subjects.AsyncSubject;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.blumental.maxim.cleanmvp.view.ActivityLifecycleEvents.MENU_CREATED;
+
 abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends ActivityView> implements FragmentPresenter<T> {
 
     protected T view;
 
     private CompositeSubscription interactorSubscriptions;
 
-    private Subscription lifecycleSubscription;
+    private CompositeSubscription lifecycleSubscription;
 
     private Memento<?> memento;
 
@@ -30,8 +33,11 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     @Override
-    public void obseveLifecycle(Observable<LifecycleEvents> observable) {
-        lifecycleSubscription = observable.subscribe(
+    public void observeLifecycle(Observable<LifecycleEvents> observable) {
+
+        lifecycleSubscription = new CompositeSubscription();
+
+        Subscription subscription = observable.subscribe(
                 new Action1<LifecycleEvents>() {
                     @Override
                     public void call(LifecycleEvents lifecycleEvents) {
@@ -45,6 +51,8 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
                     }
                 }
         );
+
+        lifecycleSubscription.add(subscription);
     }
 
     protected void onAttach() {
@@ -60,6 +68,26 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     protected void onActivityCreated() {
+        V activity = getActivity();
+
+        if (activity == null) {
+            return;
+        }
+
+        Subscription subscription = activity.getLifecycleEvents()
+                .subscribe(new Action1<ActivityLifecycleEvents>() {
+                    @Override
+                    public void call(ActivityLifecycleEvents event) {
+                        if (event.equals(MENU_CREATED)) {
+                            onActivityMenuCreated();
+                        }
+                    }
+                });
+
+        lifecycleSubscription.add(subscription);
+    }
+
+    protected void onActivityMenuCreated() {
 
     }
 
@@ -170,5 +198,13 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
     protected V getActivity() {
         return view.getActivityView();
+    }
+
+    protected <R> void switchToActivity(Class<R> activityClass) {
+        V activity = getActivity();
+
+        if (activity != null) {
+            activity.switchToActivity(activityClass);
+        }
     }
 }

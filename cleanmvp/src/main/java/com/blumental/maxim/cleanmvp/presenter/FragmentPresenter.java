@@ -9,5 +9,5 @@ public interface FragmentPresenter<T extends FragmentView> {
 
     void setView(T view);
 
-    void obseveLifecycle(Observable<LifecycleEvents> observable);
+    void observeLifecycle(Observable<LifecycleEvents> observable);
 }

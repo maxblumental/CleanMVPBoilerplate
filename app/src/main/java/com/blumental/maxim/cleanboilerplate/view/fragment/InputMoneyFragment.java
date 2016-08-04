@@ -14,7 +14,7 @@ import android.widget.Spinner;
 
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.view.activity.MainActivityView;
+import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
 import com.blumental.maxim.cleanmvp.view.BaseFragment;
 
@@ -29,13 +29,16 @@ import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static com.jakewharton.rxbinding.view.RxView.clicks;
 
-public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainActivityView> implements InputMoneyView {
+public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainView> implements InputMoneyView {
 
     @BindView(R.id.amountEditText)
     EditText amount;
 
     @BindView(R.id.convertButton)
     Button convertButton;
+
+    @BindView(R.id.go_to_tabs_button)
+    Button goToTabsButton;
 
     @BindView(R.id.currencySpinner)
     Spinner currencySpinner;
@@ -123,5 +126,10 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainAc
     @Override
     public Observable<Void> getConvertButtonClicks() {
         return clicks(convertButton);
+    }
+
+    @Override
+    public Observable<Void> getGoToTabsClicks() {
+        return clicks(goToTabsButton);
     }
 }

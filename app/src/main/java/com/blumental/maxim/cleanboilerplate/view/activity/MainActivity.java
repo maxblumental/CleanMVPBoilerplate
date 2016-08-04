@@ -11,7 +11,7 @@ import com.blumental.maxim.cleanmvp.view.BaseActivity;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements MainActivityView {
+public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

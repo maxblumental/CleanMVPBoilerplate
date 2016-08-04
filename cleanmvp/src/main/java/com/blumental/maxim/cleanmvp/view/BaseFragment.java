@@ -49,7 +49,7 @@ abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends Act
 
         lifecycleSubject = PublishSubject.create();
 
-        presenter.obseveLifecycle(lifecycleSubject);
+        presenter.observeLifecycle(lifecycleSubject);
         lifecycleSubject.onNext(ATTACH);
     }
 

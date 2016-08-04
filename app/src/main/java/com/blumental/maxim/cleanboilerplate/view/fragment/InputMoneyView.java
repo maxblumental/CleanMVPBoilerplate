@@ -1,11 +1,11 @@
 package com.blumental.maxim.cleanboilerplate.view.fragment;
 
-import com.blumental.maxim.cleanboilerplate.view.activity.MainActivityView;
+import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
 import com.blumental.maxim.cleanmvp.view.FragmentView;
 
 import rx.Observable;
 
-public interface InputMoneyView extends FragmentView<MainActivityView> {
+public interface InputMoneyView extends FragmentView<MainView> {
 
     String getAmount();
 
@@ -24,4 +24,6 @@ public interface InputMoneyView extends FragmentView<MainActivityView> {
     void hideKeyboard();
 
     Observable<Void> getConvertButtonClicks();
+
+    Observable<Void> getGoToTabsClicks();
 }

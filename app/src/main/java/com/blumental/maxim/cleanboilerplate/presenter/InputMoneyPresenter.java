@@ -6,7 +6,8 @@ import android.support.annotation.NonNull;
 import com.blumental.maxim.cleanboilerplate.interactor.ConvertToAllCurrenciesInteractor;
 import com.blumental.maxim.cleanboilerplate.mapper.ConvertedMoneyToBundle;
 import com.blumental.maxim.cleanboilerplate.model.Money;
-import com.blumental.maxim.cleanboilerplate.view.activity.MainActivityView;
+import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
+import com.blumental.maxim.cleanboilerplate.view.activity.TabsActivity;
 import com.blumental.maxim.cleanboilerplate.view.fragment.ConvertedMoneyFragment;
 import com.blumental.maxim.cleanboilerplate.view.fragment.InputMoneyView;
 import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
@@ -19,22 +20,38 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, MainActivityView> {
+public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, MainView> {
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Observable<Void> observable = view.getConvertButtonClicks();
+        startObservingViewEvents();
+    }
 
-        observable.debounce(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Void>() {
+    private void startObservingViewEvents() {
+
+        observeClicks(view.getConvertButtonClicks(),
+                new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
                         handleConvertButtonClick();
                     }
                 });
+
+        observeClicks(view.getGoToTabsClicks(),
+                new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        handleGoToTabsButtonClick();
+                    }
+                });
+    }
+
+    private void observeClicks(Observable<Void> clicksObservable, Action1<Void> onNextAction) {
+        clicksObservable.debounce(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onNextAction);
     }
 
     private void handleConvertButtonClick() {
@@ -67,6 +84,10 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
                 });
     }
 
+    private boolean isInputWrong(String amount, String currency) {
+        return amount.isEmpty() || currency.isEmpty();
+    }
+
     private void onWrongInput() {
         view.showError("Enter amount and select a currency!");
         view.hideProgress();
@@ -97,7 +118,7 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
         };
     }
 
-    private boolean isInputWrong(String amount, String currency) {
-        return amount.isEmpty() || currency.isEmpty();
+    private void handleGoToTabsButtonClick() {
+        switchToActivity(TabsActivity.class);
     }
 }
