@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 
 public class ConvertedMoneyAdapter extends RecyclerView.Adapter<ConvertedMoneyAdapter.ViewHolder> {
 
-    List<Money> convertedMoney;
+    private List<Money> convertedMoney;
 
     public void setConvertedMoney(List<Money> convertedMoney) {
         this.convertedMoney = convertedMoney;

@@ -18,11 +18,15 @@ public class MainActivity extends BaseActivity implements MainActivityView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-
-        if (fragments == null || fragments.isEmpty()) {
+        if (isActivityStart()) {
             switchToInputMoneyScreen();
         }
+    }
+
+    private boolean isActivityStart() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        return fragments == null || fragments.isEmpty();
     }
 
     private void switchToInputMoneyScreen() {
