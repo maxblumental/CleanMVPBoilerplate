@@ -13,20 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blumental.maxim.cleanmvp.presenter.FragmentPresenter;
+import com.blumental.maxim.cleanmvp.presenter.LifecycleEvents;
 
 import rx.subjects.PublishSubject;
 
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.ACTIVITY_CREATED;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.ATTACH;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.CREATE;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.CREATE_VIEW;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.DESTROY;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.DESTROY_VIEW;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.DETACH;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.PAUSE;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.RESUME;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.START;
-import static com.blumental.maxim.cleanmvp.view.LifecycleEvents.STOP;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.ACTIVITY_CREATED;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.ATTACH;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.CREATE;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.CREATE_VIEW;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.DESTROY;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.DESTROY_VIEW;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.DETACH;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.PAUSE;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.RESUME;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.START;
+import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.STOP;
 import static java.lang.String.format;
 
 abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends ActivityView> extends Fragment implements FragmentView<V> {

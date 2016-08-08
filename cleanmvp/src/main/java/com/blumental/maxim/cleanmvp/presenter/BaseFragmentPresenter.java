@@ -6,7 +6,6 @@ import android.util.Log;
 import com.blumental.maxim.cleanmvp.view.ActivityLifecycleEvents;
 import com.blumental.maxim.cleanmvp.view.ActivityView;
 import com.blumental.maxim.cleanmvp.view.FragmentView;
-import com.blumental.maxim.cleanmvp.view.LifecycleEvents;
 
 import rx.Observable;
 import rx.Subscription;
@@ -157,43 +156,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     private void handleLifecycleEvent(LifecycleEvents lifecycleEvents) {
-        switch (lifecycleEvents) {
-            case ATTACH:
-                onAttach();
-                break;
-            case CREATE:
-                onCreate();
-                break;
-            case CREATE_VIEW:
-                onCreateView();
-                break;
-            case ACTIVITY_CREATED:
-                onActivityCreated();
-                break;
-            case START:
-                onStart();
-                break;
-            case RESUME:
-                onResume();
-                break;
-            case PAUSE:
-                onPause();
-                break;
-            case STOP:
-                onStop();
-                break;
-            case DESTROY_VIEW:
-                onDestroyView();
-                break;
-            case DESTROY:
-                onDestroy();
-                break;
-            case DETACH:
-                onDetach();
-                break;
-            default:
-                throw new IllegalStateException("Unknown lifecycle event");
-        }
+        lifecycleEvents.call(this);
     }
 
     protected V getActivity() {

@@ -1,7 +1,6 @@
 package com.blumental.maxim.cleanmvp.presenter;
 
 import com.blumental.maxim.cleanmvp.view.FragmentView;
-import com.blumental.maxim.cleanmvp.view.LifecycleEvents;
 
 import rx.Observable;
 
