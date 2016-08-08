@@ -18,13 +18,15 @@ import static com.blumental.maxim.cleanmvp.view.ActivityLifecycleEvents.MENU_CRE
 
 abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends ActivityView> implements FragmentPresenter<T> {
 
+    private final static String MEMENTO_KEY = "memento key";
+
     protected T view;
 
     private CompositeSubscription interactorSubscriptions;
 
     private CompositeSubscription lifecycleSubscription;
 
-    private Memento<?> memento;
+    private Memento<BaseFragmentPresenter<T, V>, ?> memento;
 
     @Override
     public void setView(T view) {
@@ -40,7 +42,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
                 new Action1<LifecycleEvents>() {
                     @Override
                     public void call(LifecycleEvents lifecycleEvents) {
-                        handleLifecycleEvent(lifecycleEvents);
+                        lifecycleEvents.call(BaseFragmentPresenter.this);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -98,15 +100,47 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
         interactorSubscriptions = new CompositeSubscription();
 
-        if (memento != null && memento.hasElement()) {
-            Subscription subscription = memento.resubscribe();
-            interactorSubscriptions.add(subscription);
+        if (isMementoNotEmpty()) {
+            processInteractorResponseAfterPause();
+        } else {
+            checkInteractorResponseAfterConfigurationChange();
+        }
+    }
+
+    private boolean isMementoNotEmpty() {
+        return memento != null && memento.hasElement();
+    }
+
+    private void processInteractorResponseAfterPause() {
+        Subscription subscription = memento.resubscribe(this);
+        interactorSubscriptions.add(subscription);
+    }
+
+    private void checkInteractorResponseAfterConfigurationChange() {
+        V activity = getActivity();
+
+        @SuppressWarnings("unchecked")
+        Memento<BaseFragmentPresenter<T, V>, ?> memento =
+                activity.retrieveFromRetainedFragment(Memento.class, MEMENTO_KEY);
+
+        if (memento != null) {
+            memento.resubscribe(this);
         }
     }
 
     protected void onPause() {
 
         interactorSubscriptions.unsubscribe();
+
+        retainMemento();
+    }
+
+    private void retainMemento() {
+        V activity = getActivity();
+
+        if (isMementoNotEmpty() && activity.isChangingConfigurations()) {
+            activity.storeInRetainedFragment(MEMENTO_KEY, memento);
+        }
     }
 
     protected void onStop() {
@@ -126,20 +160,25 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     protected <R> void observeInteractor(Observable<R> interactorObservable,
-                                         SubscriberFactory<R> factory) {
+                                         SubscriberFactory<?, R> factory) {
 
         AsyncSubject<R> asyncSubject = AsyncSubject.create();
 
         interactorObservable.subscribe(asyncSubject);
 
-        MementoImpl<R> memento = new MementoImpl<>();
-        memento.store(asyncSubject, factory);
+        MementoImpl<BaseFragmentPresenter<T, V>, R> memento = new MementoImpl<>();
+
+        @SuppressWarnings("unchecked")
+        SubscriberFactory<BaseFragmentPresenter<T, V>, R> factory1 =
+                (SubscriberFactory<BaseFragmentPresenter<T, V>, R>) factory;
+
+        memento.store(asyncSubject, factory1);
         this.memento = memento;
 
         interactorSubscriptions.add(
                 asyncSubject
                         .doOnCompleted(nullOutMemento())
-                        .subscribe(factory.create())
+                        .subscribe(factory1.create(this))
         );
     }
 
@@ -153,10 +192,6 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
                 }
             }
         };
-    }
-
-    private void handleLifecycleEvent(LifecycleEvents lifecycleEvents) {
-        lifecycleEvents.call(this);
     }
 
     protected V getActivity() {

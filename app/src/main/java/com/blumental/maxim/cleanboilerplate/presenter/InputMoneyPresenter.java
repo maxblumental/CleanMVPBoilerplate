@@ -75,13 +75,8 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
         Observable<Bundle> interactorObservable = interactor.run(money)
                 .map(ConvertedMoneyToBundle.map());
 
-        observeInteractor(interactorObservable,
-                new SubscriberFactory<Bundle>() {
-                    @Override
-                    public Subscriber<Bundle> create() {
-                        return createConvertToAllCurrenciesSubscriber();
-                    }
-                });
+        SubscriberFactoryImpl subscriberFacotry = new SubscriberFactoryImpl();
+        observeInteractor(interactorObservable, subscriberFacotry);
     }
 
     private boolean isInputWrong(String amount, String currency) {
@@ -120,5 +115,14 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
 
     private void handleGoToTabsButtonClick() {
         switchToActivity(TabsActivity.class);
+    }
+
+    private static class SubscriberFactoryImpl
+            implements SubscriberFactory<InputMoneyPresenter, Bundle> {
+
+        @Override
+        public Subscriber<Bundle> create(InputMoneyPresenter presenter) {
+            return presenter.createConvertToAllCurrenciesSubscriber();
+        }
     }
 }

@@ -13,6 +13,9 @@ import rx.Observable;
 import rx.Subscriber;
 
 public class HardcoreService implements FixerService {
+
+    private int DELAY = 2_000;
+
     @Override
     public Observable<LatestRates> getLatestRates(@Query("base") final String baseCurrency) {
 
@@ -21,6 +24,12 @@ public class HardcoreService implements FixerService {
             public void call(Subscriber<? super LatestRates> subscriber) {
                 BufferedReader reader = null;
                 try {
+
+                    try {
+                        Thread.sleep(DELAY);
+                    } catch (InterruptedException ignored) {
+                    }
+
                     URL url = new URL(BASE_URL + "/latest?base=" + baseCurrency);
 
                     reader = new BufferedReader(new InputStreamReader(url.openStream()));

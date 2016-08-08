@@ -6,16 +6,16 @@ import rx.Subscription;
 import rx.functions.Action0;
 import rx.subjects.AsyncSubject;
 
-class MementoImpl<T> implements Memento<T> {
+class MementoImpl<P extends BaseFragmentPresenter<?, ?>, T> implements Memento<P, T> {
 
     private AsyncSubject<T> asyncSubject;
 
-    private SubscriberFactory<T> factory;
+    private SubscriberFactory<P, T> factory;
 
     private boolean hasElement;
 
     @Override
-    public void store(AsyncSubject<T> asyncSubject, SubscriberFactory<T> factory) {
+    public void store(AsyncSubject<T> asyncSubject, SubscriberFactory<P, T> factory) {
 
         this.asyncSubject = asyncSubject;
 
@@ -39,10 +39,10 @@ class MementoImpl<T> implements Memento<T> {
     }
 
     @Override
-    public Subscription resubscribe() {
+    public Subscription resubscribe(P presenter) {
         return asyncSubject
                 .doOnCompleted(clearAction())
-                .subscribe(factory.create());
+                .subscribe(factory.create(presenter));
     }
 
     @NonNull
@@ -54,6 +54,4 @@ class MementoImpl<T> implements Memento<T> {
             }
         };
     }
-
-
 }

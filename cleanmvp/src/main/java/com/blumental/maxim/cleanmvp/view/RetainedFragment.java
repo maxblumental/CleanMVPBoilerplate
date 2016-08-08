@@ -23,6 +23,7 @@ public class RetainedFragment extends Fragment {
     public <R> R retrieveObject(Class<R> objectClass, String key) {
 
         Object o = map.get(key);
+        map.remove(key);
 
         if (objectClass.isInstance(o)) {
 
