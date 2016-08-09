@@ -1,6 +1,5 @@
 package com.blumental.maxim.cleanboilerplate.interactor;
 
-
 import com.blumental.maxim.cleanboilerplate.App;
 import com.blumental.maxim.cleanboilerplate.di.ApplicationComponent;
 import com.blumental.maxim.cleanboilerplate.executor.Executor;
@@ -39,7 +38,7 @@ public class ConvertToAllCurrenciesInteractor implements Interactor<Money, Conve
     }
 
     @Override
-    public Observable<ConvertedMoney> run(final Money argument) {
+    public Observable<ConvertedMoney> createObservable(final Money argument) {
 
         Observable<ConvertedMoney> observable =
                 repository

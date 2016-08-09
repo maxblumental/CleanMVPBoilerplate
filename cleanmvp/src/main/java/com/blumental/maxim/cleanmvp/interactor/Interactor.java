@@ -4,5 +4,5 @@ import rx.Observable;
 
 public interface Interactor<T, R> {
 
-    Observable<R> run(T argument);
+    Observable<R> createObservable(T argument);
 }

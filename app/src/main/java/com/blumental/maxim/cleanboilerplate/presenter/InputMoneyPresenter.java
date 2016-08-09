@@ -71,12 +71,12 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
         Money money = new Money(Integer.parseInt(amount), currency);
 
         ConvertToAllCurrenciesInteractor interactor = ConvertToAllCurrenciesInteractor.create();
-
-        Observable<Bundle> interactorObservable = interactor.run(money)
+        Observable<Bundle> interactorObservable = interactor.createObservable(money)
                 .map(ConvertedMoneyToBundle.map());
 
-        SubscriberFactoryImpl subscriberFacotry = new SubscriberFactoryImpl();
-        observeInteractor(interactorObservable, subscriberFacotry);
+        SubscriberFactoryImpl subscriberFactory = new SubscriberFactoryImpl();
+
+        launchInteractor(interactorObservable, subscriberFactory);
     }
 
     private boolean isInputWrong(String amount, String currency) {

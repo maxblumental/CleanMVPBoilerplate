@@ -3,6 +3,7 @@ package com.blumental.maxim.cleanmvp.presenter;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.blumental.maxim.cleanmvp.interactor.Interactor;
 import com.blumental.maxim.cleanmvp.view.ActivityLifecycleEvents;
 import com.blumental.maxim.cleanmvp.view.ActivityView;
 import com.blumental.maxim.cleanmvp.view.FragmentView;
@@ -159,8 +160,8 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
         lifecycleSubscription.unsubscribe();
     }
 
-    protected <R> void observeInteractor(Observable<R> interactorObservable,
-                                         SubscriberFactory<?, R> factory) {
+    protected <R> void launchInteractor(Observable<R> interactorObservable,
+                                        SubscriberFactory<?, R> factory) {
 
         AsyncSubject<R> asyncSubject = AsyncSubject.create();
 
@@ -180,6 +181,14 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
                         .doOnCompleted(nullOutMemento())
                         .subscribe(factory1.create(this))
         );
+    }
+
+    protected <I, R> void launchInteractor(Interactor<I, R> interactor, I input,
+                                           SubscriberFactory<?, R> factory) {
+
+        Observable<R> interactorObservable = interactor.createObservable(input);
+
+        launchInteractor(interactorObservable, factory);
     }
 
     @NonNull
