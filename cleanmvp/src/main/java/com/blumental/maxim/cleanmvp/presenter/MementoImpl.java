@@ -6,16 +6,16 @@ import rx.Subscription;
 import rx.functions.Action0;
 import rx.subjects.AsyncSubject;
 
-class MementoImpl<P extends BaseFragmentPresenter<?, ?>, T> implements Memento<P, T> {
+public class MementoImpl<P extends BasePresenter<?, ?>, R> implements Memento<P, R> {
 
-    private AsyncSubject<T> asyncSubject;
+    private AsyncSubject<R> asyncSubject;
 
-    private SubscriberFactory<P, T> factory;
+    private SubscriberFactory<P, R> factory;
 
     private boolean hasElement;
 
     @Override
-    public void store(AsyncSubject<T> asyncSubject, SubscriberFactory<P, T> factory) {
+    public void store(AsyncSubject<R> asyncSubject, SubscriberFactory<P, R> factory) {
 
         this.asyncSubject = asyncSubject;
 

@@ -15,10 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.blumental.maxim.cleanboilerplate.R;
-import com.blumental.maxim.cleanboilerplate.presenter.InputMoneyPresenter;
+import com.blumental.maxim.cleanboilerplate.presenter.fragment.InputMoneyPresenter;
 import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
-import com.blumental.maxim.cleanmvp.view.BaseFragment;
+import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +41,9 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
 
     @BindView(R.id.go_to_tabs_button)
     Button goToTabsButton;
+
+    @BindView(R.id.go_to_error_service_button)
+    Button goToErrorServiceButton;
 
     @BindView(R.id.currencySpinner)
     Spinner currencySpinner;
@@ -145,5 +148,10 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
     @Override
     public Observable<Void> getGoToTabsClicks() {
         return clicks(goToTabsButton);
+    }
+
+    @Override
+    public Observable<Void> getGoToErrorServiceButtonClicks() {
+        return clicks(goToErrorServiceButton);
     }
 }

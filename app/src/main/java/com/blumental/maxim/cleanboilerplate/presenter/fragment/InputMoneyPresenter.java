@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.presenter;
+package com.blumental.maxim.cleanboilerplate.presenter.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,11 +6,12 @@ import android.support.annotation.NonNull;
 import com.blumental.maxim.cleanboilerplate.interactor.ConvertToAllCurrenciesInteractor;
 import com.blumental.maxim.cleanboilerplate.mapper.ConvertedMoneyToBundle;
 import com.blumental.maxim.cleanboilerplate.model.Money;
+import com.blumental.maxim.cleanboilerplate.view.activity.ErrorServiceActivity;
 import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
 import com.blumental.maxim.cleanboilerplate.view.activity.TabsActivity;
 import com.blumental.maxim.cleanboilerplate.view.fragment.ConvertedMoneyFragment;
 import com.blumental.maxim.cleanboilerplate.view.fragment.InputMoneyView;
-import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
+import com.blumental.maxim.cleanmvp.presenter.fragment.BaseFragmentPresenter;
 import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -23,7 +24,7 @@ import rx.functions.Action1;
 public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, MainView> {
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         startObservingViewEvents();
@@ -44,6 +45,14 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
                     @Override
                     public void call(Void aVoid) {
                         handleGoToTabsButtonClick();
+                    }
+                });
+
+        observeClicks(view.getGoToErrorServiceButtonClicks(),
+                new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        handleGoToErrorServiceButtonClicks();
                     }
                 });
     }
@@ -113,10 +122,6 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
         };
     }
 
-    private void handleGoToTabsButtonClick() {
-        switchToActivity(TabsActivity.class);
-    }
-
     private static class SubscriberFactoryImpl
             implements SubscriberFactory<InputMoneyPresenter, Bundle> {
 
@@ -124,5 +129,13 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
         public Subscriber<Bundle> create(InputMoneyPresenter presenter) {
             return presenter.createConvertToAllCurrenciesSubscriber();
         }
+    }
+
+    private void handleGoToTabsButtonClick() {
+        switchToActivity(TabsActivity.class);
+    }
+
+    private void handleGoToErrorServiceButtonClicks() {
+        switchToActivity(ErrorServiceActivity.class);
     }
 }

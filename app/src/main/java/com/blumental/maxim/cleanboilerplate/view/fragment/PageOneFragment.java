@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blumental.maxim.cleanboilerplate.R;
-import com.blumental.maxim.cleanboilerplate.presenter.PageOnePresenter;
+import com.blumental.maxim.cleanboilerplate.presenter.fragment.PageOnePresenter;
 import com.blumental.maxim.cleanboilerplate.view.activity.TabsView;
-import com.blumental.maxim.cleanmvp.view.BaseFragment;
+import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

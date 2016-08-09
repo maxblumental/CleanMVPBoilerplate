@@ -1,6 +1,8 @@
-package com.blumental.maxim.cleanmvp.view;
+package com.blumental.maxim.cleanmvp.view.fragment;
 
 import android.os.Bundle;
+
+import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 
 public interface FragmentView<V extends ActivityView> {
 

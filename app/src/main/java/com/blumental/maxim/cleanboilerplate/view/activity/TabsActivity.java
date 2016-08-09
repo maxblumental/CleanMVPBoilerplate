@@ -10,15 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.blumental.maxim.cleanboilerplate.R;
+import com.blumental.maxim.cleanboilerplate.presenter.activity.TabsPresenter;
 import com.blumental.maxim.cleanboilerplate.view.adapter.TabsAdapter;
-import com.blumental.maxim.cleanmvp.view.BaseActivity;
+import com.blumental.maxim.cleanmvp.view.activity.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
-public class TabsActivity extends BaseActivity implements TabsView {
+public class TabsActivity extends BaseActivity<TabsPresenter> implements TabsView {
 
     private PublishSubject<String> searchQuerySubject;
 
@@ -29,6 +30,16 @@ public class TabsActivity extends BaseActivity implements TabsView {
     TabLayout tabLayout;
 
     @Override
+    protected TabsPresenter getPresenter() {
+        return new TabsPresenter();
+    }
+
+    @Override
+    public Observable<String> getSearchQueryObservable() {
+        return searchQuerySubject;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabs_activity);
@@ -37,14 +48,14 @@ public class TabsActivity extends BaseActivity implements TabsView {
         initializeViewPager();
     }
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-    }
+    private void initializeViewPager() {
+        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+        tabLayout.addTab(tabLayout.newTab().setText("Page 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Page 2"));
+
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -74,20 +85,5 @@ public class TabsActivity extends BaseActivity implements TabsView {
                 return true;
             }
         };
-    }
-
-    private void initializeViewPager() {
-        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-
-        tabLayout.addTab(tabLayout.newTab().setText("Page 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Page 2"));
-
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    @Override
-    public Observable<String> getSearchQueryObservable() {
-        return searchQuerySubject;
     }
 }

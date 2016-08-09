@@ -2,7 +2,7 @@ package com.blumental.maxim.cleanboilerplate.view.fragment;
 
 import com.blumental.maxim.cleanboilerplate.model.Money;
 import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
-import com.blumental.maxim.cleanmvp.view.FragmentView;
+import com.blumental.maxim.cleanmvp.view.fragment.FragmentView;
 
 import java.util.List;
 

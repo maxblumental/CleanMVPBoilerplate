@@ -1,8 +1,8 @@
-package com.blumental.maxim.cleanboilerplate.presenter;
+package com.blumental.maxim.cleanboilerplate.presenter.fragment;
 
 import com.blumental.maxim.cleanboilerplate.view.activity.TabsView;
 import com.blumental.maxim.cleanboilerplate.view.fragment.PageTwoView;
-import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
+import com.blumental.maxim.cleanmvp.presenter.fragment.BaseFragmentPresenter;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

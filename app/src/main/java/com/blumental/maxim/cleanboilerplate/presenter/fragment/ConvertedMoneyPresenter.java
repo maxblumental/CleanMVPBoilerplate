@@ -1,11 +1,11 @@
-package com.blumental.maxim.cleanboilerplate.presenter;
+package com.blumental.maxim.cleanboilerplate.presenter.fragment;
 
 import android.os.Bundle;
 
 import com.blumental.maxim.cleanboilerplate.model.Money;
 import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
 import com.blumental.maxim.cleanboilerplate.view.fragment.ConvertedMoneyView;
-import com.blumental.maxim.cleanmvp.presenter.BaseFragmentPresenter;
+import com.blumental.maxim.cleanmvp.presenter.fragment.BaseFragmentPresenter;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class ConvertedMoneyPresenter extends BaseFragmentPresenter<ConvertedMone
     public static final String BASE_CURRENCY_KEY = "base currency key";
 
     @Override
-    protected void onActivityCreated() {
+    public void onActivityCreated() {
         Bundle args = view.getArguments();
 
         double amount = args.getDouble(BASE_AMOUNT_KEY);

@@ -1,6 +1,6 @@
 package com.blumental.maxim.cleanboilerplate.view.activity;
 
-import com.blumental.maxim.cleanmvp.view.ActivityView;
+import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 
 import rx.Observable;
 

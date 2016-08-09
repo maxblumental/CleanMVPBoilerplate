@@ -10,9 +10,9 @@ import java.util.List;
 
 import rx.functions.Func1;
 
-import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.BASE_AMOUNT_KEY;
-import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.BASE_CURRENCY_KEY;
-import static com.blumental.maxim.cleanboilerplate.presenter.ConvertedMoneyPresenter.MONEY_LIST_KEY;
+import static com.blumental.maxim.cleanboilerplate.presenter.fragment.ConvertedMoneyPresenter.BASE_AMOUNT_KEY;
+import static com.blumental.maxim.cleanboilerplate.presenter.fragment.ConvertedMoneyPresenter.BASE_CURRENCY_KEY;
+import static com.blumental.maxim.cleanboilerplate.presenter.fragment.ConvertedMoneyPresenter.MONEY_LIST_KEY;
 
 public class ConvertedMoneyToBundle {
 

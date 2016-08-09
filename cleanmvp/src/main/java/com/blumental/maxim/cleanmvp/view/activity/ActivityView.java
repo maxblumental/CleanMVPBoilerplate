@@ -1,6 +1,8 @@
-package com.blumental.maxim.cleanmvp.view;
+package com.blumental.maxim.cleanmvp.view.activity;
 
 import android.os.Bundle;
+
+import com.blumental.maxim.cleanmvp.presenter.activity.ActivityLifecycleEvents;
 
 import rx.Observable;
 

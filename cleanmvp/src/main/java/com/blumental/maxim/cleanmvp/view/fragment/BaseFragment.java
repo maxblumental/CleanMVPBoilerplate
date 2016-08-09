@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanmvp.view;
+package com.blumental.maxim.cleanmvp.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,31 +12,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blumental.maxim.cleanmvp.presenter.FragmentPresenter;
-import com.blumental.maxim.cleanmvp.presenter.LifecycleEvents;
+import com.blumental.maxim.cleanmvp.presenter.fragment.FragmentPresenter;
+import com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents;
+import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 
 import rx.subjects.PublishSubject;
 
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.ACTIVITY_CREATED;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.ATTACH;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.CREATE;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.CREATE_VIEW;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.DESTROY;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.DESTROY_VIEW;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.DETACH;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.PAUSE;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.RESUME;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.START;
-import static com.blumental.maxim.cleanmvp.presenter.LifecycleEvents.STOP;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.ACTIVITY_CREATED;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.ATTACH;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.CREATE;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.CREATE_VIEW;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.DESTROY;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.DESTROY_VIEW;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.DETACH;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.PAUSE;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.RESUME;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.START;
+import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.STOP;
 import static java.lang.String.format;
 
-abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends ActivityView> extends Fragment implements FragmentView<V> {
+abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends ActivityView>
+        extends Fragment implements FragmentView<V> {
 
     public final String TAG = getClass().getName();
 
     protected abstract T getPresenter();
 
-    private PublishSubject<LifecycleEvents> lifecycleSubject;
+    private PublishSubject<FragmentLifecycleEvents> lifecycleSubject;
 
     @Override
     public void onAttach(Context context) {

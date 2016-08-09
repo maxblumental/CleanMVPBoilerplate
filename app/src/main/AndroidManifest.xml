@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.TabsActivity" />
+        <activity android:name=".view.activity.ErrorServiceActivity" />
     </application>
 
 </manifest>

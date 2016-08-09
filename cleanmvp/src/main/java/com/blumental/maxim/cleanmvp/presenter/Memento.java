@@ -3,9 +3,9 @@ package com.blumental.maxim.cleanmvp.presenter;
 import rx.Subscription;
 import rx.subjects.AsyncSubject;
 
-interface Memento<P extends BaseFragmentPresenter<?, ?>, T> {
+public interface Memento<P extends BasePresenter<?, ?>, R> {
 
-    void store(AsyncSubject<T> asyncSubject, SubscriberFactory<P, T> factory);
+    void store(AsyncSubject<R> asyncSubject, SubscriberFactory<P, R> factory);
 
     boolean hasElement();
 

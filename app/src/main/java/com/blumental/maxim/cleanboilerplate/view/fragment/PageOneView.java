@@ -1,7 +1,7 @@
 package com.blumental.maxim.cleanboilerplate.view.fragment;
 
 import com.blumental.maxim.cleanboilerplate.view.activity.TabsView;
-import com.blumental.maxim.cleanmvp.view.FragmentView;
+import com.blumental.maxim.cleanmvp.view.fragment.FragmentView;
 
 public interface PageOneView extends FragmentView<TabsView> {
 
