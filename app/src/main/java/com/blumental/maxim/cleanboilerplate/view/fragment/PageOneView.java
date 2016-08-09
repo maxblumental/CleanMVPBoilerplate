@@ -7,5 +7,5 @@ public interface PageOneView extends FragmentView<TabsView> {
 
     String getText();
 
-    void setText(String query);
+    void setText(String text);
 }
