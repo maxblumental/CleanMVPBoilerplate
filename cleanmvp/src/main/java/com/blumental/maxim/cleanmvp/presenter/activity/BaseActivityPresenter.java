@@ -9,6 +9,11 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
         extends BasePresenter<V, ActivityLifecycle> implements ActivityPresenter<V>, ActivityLifecycle {
 
     @Override
+    protected String getMementoKey() {
+        return "activity memento key";
+    }
+
+    @Override
     public void onCreate() {
 
     }
@@ -21,6 +26,8 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     @Override
     public void onResume() {
         interactorSubscriptions = new CompositeSubscription();
+
+        checkMementoForPendingInteractorResult();
     }
 
     @Override
@@ -31,6 +38,8 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     @Override
     public void onPause() {
         interactorSubscriptions.unsubscribe();
+
+        retainMemento();
     }
 
     @Override
@@ -46,5 +55,9 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     @Override
     public <R> void switchToActivity(Class<R> activityClass) {
         view.switchToActivity(activityClass);
+    }
+
+    protected V getActivityView() {
+        return view;
     }
 }

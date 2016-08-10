@@ -1,7 +1,6 @@
 package com.blumental.maxim.cleanmvp.presenter.fragment;
 
 import com.blumental.maxim.cleanmvp.presenter.BasePresenter;
-import com.blumental.maxim.cleanmvp.presenter.Memento;
 import com.blumental.maxim.cleanmvp.presenter.activity.ActivityLifecycleEvents;
 import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 import com.blumental.maxim.cleanmvp.view.fragment.FragmentView;
@@ -14,6 +13,11 @@ import static com.blumental.maxim.cleanmvp.presenter.activity.ActivityLifecycleE
 
 abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends ActivityView>
         extends BasePresenter<T, FragmentLifecycle> implements FragmentPresenter<T>, FragmentLifecycle {
+
+    @Override
+    protected String getMementoKey() {
+        return "fragment memento key";
+    }
 
     @Override
     public void onAttach() {
@@ -61,28 +65,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
         interactorSubscriptions = new CompositeSubscription();
 
-        if (isMementoNotEmpty()) {
-            processInteractorResponseAfterPause();
-        } else {
-            checkInteractorResponseAfterConfigurationChange();
-        }
-    }
-
-    private void processInteractorResponseAfterPause() {
-        Subscription subscription = memento.resubscribe(this);
-        interactorSubscriptions.add(subscription);
-    }
-
-    private void checkInteractorResponseAfterConfigurationChange() {
-        V activity = getActivityView();
-
-        @SuppressWarnings("unchecked")
-        Memento<BaseFragmentPresenter<T, V>, ?> memento =
-                activity.retrieveFromRetainedFragment(Memento.class, MEMENTO_KEY);
-
-        if (memento != null) {
-            memento.resubscribe(this);
-        }
+        checkMementoForPendingInteractorResult();
     }
 
     protected void onActivityMenuCreated() {
@@ -95,14 +78,6 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
         interactorSubscriptions.unsubscribe();
 
         retainMemento();
-    }
-
-    private void retainMemento() {
-        V activity = getActivityView();
-
-        if (isMementoNotEmpty() && activity.isChangingConfigurations()) {
-            activity.storeInRetainedFragment(MEMENTO_KEY, memento);
-        }
     }
 
     @Override

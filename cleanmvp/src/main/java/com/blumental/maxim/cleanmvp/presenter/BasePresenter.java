@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.blumental.maxim.cleanmvp.interactor.Interactor;
+import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 
 import rx.Observable;
 import rx.Subscription;
@@ -14,15 +15,13 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter<V, L> {
 
-    protected final static String MEMENTO_KEY = "memento key";
-
     protected V view;
 
     protected CompositeSubscription interactorSubscriptions;
 
     protected CompositeSubscription lifecycleSubscription;
 
-    protected Memento<BasePresenter<V, L>, ?> memento;
+    private Memento<BasePresenter<V, L>, ?> memento;
 
     public void setView(V view) {
         this.view = view;
@@ -54,7 +53,7 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
         lifecycleSubscription.add(subscription);
     }
 
-    protected boolean isMementoNotEmpty() {
+    private boolean isMementoNotEmpty() {
         return memento != null && memento.hasElement();
     }
 
@@ -99,5 +98,43 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
                 }
             }
         };
+    }
+
+    abstract protected ActivityView getActivityView();
+
+    protected void retainMemento() {
+
+        ActivityView activity = getActivityView();
+
+        if (isMementoNotEmpty() && activity.isChangingConfigurations()) {
+            activity.storeInRetainedFragment(getMementoKey(), memento);
+        }
+    }
+
+    abstract protected String getMementoKey();
+
+    protected void checkMementoForPendingInteractorResult() {
+        if (isMementoNotEmpty()) {
+            processInteractorResponseAfterPause();
+        } else {
+            checkInteractorResponseAfterConfigurationChange();
+        }
+    }
+
+    private void processInteractorResponseAfterPause() {
+        Subscription subscription = memento.resubscribe(this);
+        interactorSubscriptions.add(subscription);
+    }
+
+    private void checkInteractorResponseAfterConfigurationChange() {
+        ActivityView activity = getActivityView();
+
+        @SuppressWarnings("unchecked")
+        Memento<BasePresenter<V, L>, ?> memento =
+                activity.retrieveFromRetainedFragment(Memento.class, getMementoKey());
+
+        if (memento != null) {
+            memento.resubscribe(this);
+        }
     }
 }
