@@ -60,7 +60,9 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
         interactorSubscriptions = new CompositeSubscription();
 
-        checkMementoForPendingInteractorResponse();
+        checkInteractorResponseMemento();
+
+        retrieveLastInteractorMemento();
     }
 
     protected void onActivityMenuCreated() {
@@ -72,7 +74,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
         interactorSubscriptions.unsubscribe();
 
-        retainResponseMemento();
+        retainMementos();
     }
 
     @Override
@@ -96,7 +98,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     @Override
-    public <R> void switchToActivity(Class<R> activityClass) {
+    protected <R> void switchToActivity(Class<R> activityClass) {
         V activity = getActivityView();
 
         if (activity != null) {

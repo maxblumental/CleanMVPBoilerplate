@@ -4,8 +4,6 @@ import com.blumental.maxim.cleanmvp.presenter.BasePresenter;
 import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 
 import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
 
 public class InteractorMementoImpl<P extends BasePresenter<?, ?>, R> implements InteractorMemento<P, R> {
 
@@ -31,17 +29,12 @@ public class InteractorMementoImpl<P extends BasePresenter<?, ?>, R> implements 
     }
 
     @Override
-    public void clear() {
-        hasElement = false;
-
-        interactorObservable = null;
-
-        factory = null;
+    public Observable<R> getInteractorObservable() {
+        return interactorObservable;
     }
 
     @Override
-    public Subscription replay(P presenter) {
-        Subscriber<R> subscriber = factory.create(presenter);
-        return interactorObservable.subscribe(subscriber);
+    public SubscriberFactory<P, R> getSubscriberFactory() {
+        return factory;
     }
 }

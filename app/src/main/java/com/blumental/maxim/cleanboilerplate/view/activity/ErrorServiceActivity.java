@@ -17,8 +17,6 @@ import rx.Observable;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static android.widget.Toast.LENGTH_LONG;
-import static android.widget.Toast.makeText;
 import static com.jakewharton.rxbinding.view.RxView.clicks;
 
 public class ErrorServiceActivity extends BaseActivity<ErrorServicePresenter> implements ErrorServiceView {
@@ -83,10 +81,5 @@ public class ErrorServiceActivity extends BaseActivity<ErrorServicePresenter> im
     @Override
     public Observable<Void> getRetryButtonClicks() {
         return clicks(retryButton);
-    }
-
-    @Override
-    public void showToast(String retry) {
-        makeText(this, retry, LENGTH_LONG).show();
     }
 }

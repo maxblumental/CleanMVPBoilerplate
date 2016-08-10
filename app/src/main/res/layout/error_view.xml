@@ -6,7 +6,7 @@
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:translationZ="2dp">
+    android:translationZ="1dp">
 
     <TextView
         android:id="@+id/messageTextView"

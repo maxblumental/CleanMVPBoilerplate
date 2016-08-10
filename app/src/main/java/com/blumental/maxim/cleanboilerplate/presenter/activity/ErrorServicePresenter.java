@@ -35,7 +35,8 @@ public class ErrorServicePresenter extends BaseActivityPresenter<ErrorServiceVie
     }
 
     private void handleRetry() {
-        view.showToast("RETRY");
+        view.showProgress();
+        replayLastInteractor();
     }
 
     private void observeClicks(Observable<Void> clicksObservable, Action1<Void> onNextAction) {

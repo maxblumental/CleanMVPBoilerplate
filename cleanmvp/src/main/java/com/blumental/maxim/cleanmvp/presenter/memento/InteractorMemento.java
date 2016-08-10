@@ -4,7 +4,6 @@ import com.blumental.maxim.cleanmvp.presenter.BasePresenter;
 import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 
 import rx.Observable;
-import rx.Subscription;
 
 public interface InteractorMemento<P extends BasePresenter<?, ?>, R> {
 
@@ -12,7 +11,7 @@ public interface InteractorMemento<P extends BasePresenter<?, ?>, R> {
 
     boolean isNotEmpty();
 
-    void clear();
+    Observable<R> getInteractorObservable();
 
-    Subscription replay(P presenter);
+    SubscriberFactory<P, R> getSubscriberFactory();
 }

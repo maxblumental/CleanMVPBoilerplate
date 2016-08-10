@@ -19,6 +19,4 @@ public interface ErrorServiceView extends ActivityView {
     Observable<Void> getSendRequestButtonClicks();
 
     Observable<Void> getRetryButtonClicks();
-
-    void showToast(String retry);
 }

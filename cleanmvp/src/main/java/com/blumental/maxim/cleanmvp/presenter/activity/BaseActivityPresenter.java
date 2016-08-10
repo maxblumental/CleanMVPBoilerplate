@@ -22,7 +22,9 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     public void onResume() {
         interactorSubscriptions = new CompositeSubscription();
 
-        checkMementoForPendingInteractorResponse();
+        checkInteractorResponseMemento();
+
+        retrieveLastInteractorMemento();
     }
 
     @Override
@@ -34,7 +36,7 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     public void onPause() {
         interactorSubscriptions.unsubscribe();
 
-        retainResponseMemento();
+        retainMementos();
     }
 
     @Override
@@ -48,7 +50,7 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     }
 
     @Override
-    public <R> void switchToActivity(Class<R> activityClass) {
+    protected <R> void switchToActivity(Class<R> activityClass) {
         view.switchToActivity(activityClass);
     }
 
