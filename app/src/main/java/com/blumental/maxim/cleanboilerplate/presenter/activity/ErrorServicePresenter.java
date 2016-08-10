@@ -17,15 +17,25 @@ public class ErrorServicePresenter extends BaseActivityPresenter<ErrorServiceVie
     public void onResume() {
         super.onResume();
 
-        Observable<Void> observable = view.getSendRequestButtonClicks();
-
-        observeClicks(observable,
+        observeClicks(view.getSendRequestButtonClicks(),
                 new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
                         handleSendRequestButtonClick();
                     }
                 });
+
+        observeClicks(view.getRetryButtonClicks(),
+                new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        handleRetry();
+                    }
+                });
+    }
+
+    private void handleRetry() {
+        view.showToast("RETRY");
     }
 
     private void observeClicks(Observable<Void> clicksObservable, Action1<Void> onNextAction) {
