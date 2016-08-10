@@ -1,12 +1,15 @@
-package com.blumental.maxim.cleanmvp.presenter;
+package com.blumental.maxim.cleanmvp.presenter.memento;
 
 import android.support.annotation.NonNull;
+
+import com.blumental.maxim.cleanmvp.presenter.BasePresenter;
+import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.subjects.AsyncSubject;
 
-public class MementoImpl<P extends BasePresenter<?, ?>, R> implements Memento<P, R> {
+public class InteractorResponseMementoImpl<P extends BasePresenter<?, ?>, R> implements InteractorResponseMemento<P, R> {
 
     private AsyncSubject<R> asyncSubject;
 
@@ -25,7 +28,7 @@ public class MementoImpl<P extends BasePresenter<?, ?>, R> implements Memento<P,
     }
 
     @Override
-    public boolean hasElement() {
+    public boolean isNotEmpty() {
         return hasElement;
     }
 
@@ -39,7 +42,7 @@ public class MementoImpl<P extends BasePresenter<?, ?>, R> implements Memento<P,
     }
 
     @Override
-    public Subscription resubscribe(P presenter) {
+    public Subscription handleResonse(P presenter) {
         return asyncSubject
                 .doOnCompleted(clearAction())
                 .subscribe(factory.create(presenter));

@@ -15,11 +15,6 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
         extends BasePresenter<T, FragmentLifecycle> implements FragmentPresenter<T>, FragmentLifecycle {
 
     @Override
-    protected String getMementoKey() {
-        return "fragment memento key";
-    }
-
-    @Override
     public void onAttach() {
 
     }
@@ -65,7 +60,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
         interactorSubscriptions = new CompositeSubscription();
 
-        checkMementoForPendingInteractorResult();
+        checkMementoForPendingInteractorResponse();
     }
 
     protected void onActivityMenuCreated() {
@@ -77,7 +72,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
         interactorSubscriptions.unsubscribe();
 
-        retainMemento();
+        retainResponseMemento();
     }
 
     @Override

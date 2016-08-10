@@ -1,9 +1,11 @@
 package com.blumental.maxim.cleanmvp.presenter;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.blumental.maxim.cleanmvp.interactor.Interactor;
+import com.blumental.maxim.cleanmvp.presenter.memento.InteractorMemento;
+import com.blumental.maxim.cleanmvp.presenter.memento.InteractorResponseMemento;
+import com.blumental.maxim.cleanmvp.presenter.memento.InteractorResponseMementoImpl;
 import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 
 import rx.Observable;
@@ -21,7 +23,9 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
 
     protected CompositeSubscription lifecycleSubscription;
 
-    private Memento<BasePresenter<V, L>, ?> memento;
+    private InteractorMemento<BasePresenter<V, L>, ?> interactorMemento;
+
+    private InteractorResponseMemento<BasePresenter<V, L>, ?> interactorResponseMemento;
 
     public void setView(V view) {
         this.view = view;
@@ -53,31 +57,8 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
         lifecycleSubscription.add(subscription);
     }
 
-    private boolean isMementoNotEmpty() {
-        return memento != null && memento.hasElement();
-    }
-
-    protected <R> void launchInteractor(Observable<R> interactorObservable,
-                                        SubscriberFactory<?, R> factory) {
-
-        AsyncSubject<R> asyncSubject = AsyncSubject.create();
-
-        interactorObservable.subscribe(asyncSubject);
-
-        MementoImpl<BasePresenter<V, L>, R> memento = new MementoImpl<>();
-
-        @SuppressWarnings("unchecked")
-        SubscriberFactory<BasePresenter<V, L>, R> factory1 =
-                (SubscriberFactory<BasePresenter<V, L>, R>) factory;
-
-        memento.store(asyncSubject, factory1);
-        this.memento = memento;
-
-        interactorSubscriptions.add(
-                asyncSubject
-                        .doOnCompleted(nullOutMemento())
-                        .subscribe(factory1.create(this))
-        );
+    private boolean isInteractorResponseMementoNotEmpty() {
+        return interactorResponseMemento != null && interactorResponseMemento.isNotEmpty();
     }
 
     protected <I, R> void launchInteractor(Interactor<I, R> interactor, I input,
@@ -88,33 +69,68 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
         launchInteractor(interactorObservable, factory);
     }
 
-    @NonNull
-    private Action0 nullOutMemento() {
-        return new Action0() {
-            @Override
-            public void call() {
-                if (memento != null) {
-                    memento.clear();
-                }
-            }
-        };
+    protected <R> void launchInteractor(Observable<R> interactorObservable,
+                                        SubscriberFactory<?, R> factory) {
+
+        @SuppressWarnings("unchecked")
+        SubscriberFactory<BasePresenter<V, L>, R> factory1 =
+                (SubscriberFactory<BasePresenter<V, L>, R>) factory;
+
+        AsyncSubject<R> asyncSubject = AsyncSubject.create();
+        interactorObservable.subscribe(asyncSubject);
+
+        storeInResponseMemento(asyncSubject, factory1);
+
+        Subscription subscription = asyncSubject
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        nullOutResponseMemento();
+                    }
+                })
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        nullOutResponseMemento();
+                    }
+                })
+                .subscribe(factory1.create(this));
+
+        interactorSubscriptions.add(subscription);
+    }
+
+    private <R> void storeInResponseMemento(AsyncSubject<R> asyncSubject,
+                                            SubscriberFactory<BasePresenter<V, L>, R> factory) {
+        InteractorResponseMementoImpl<BasePresenter<V, L>, R> responseMemento =
+                new InteractorResponseMementoImpl<>();
+
+        responseMemento.store(asyncSubject, factory);
+        this.interactorResponseMemento = responseMemento;
+    }
+
+    private void nullOutResponseMemento() {
+        if (interactorResponseMemento != null) {
+            interactorResponseMemento.clear();
+        }
+    }
+
+    protected void retainResponseMemento() {
+
+        ActivityView activity = getActivityView();
+
+        if (isInteractorResponseMementoNotEmpty() && activity.isChangingConfigurations()) {
+            activity.storeInRetainedFragment(getMementoKey(), interactorResponseMemento);
+        }
     }
 
     abstract protected ActivityView getActivityView();
 
-    protected void retainMemento() {
-
-        ActivityView activity = getActivityView();
-
-        if (isMementoNotEmpty() && activity.isChangingConfigurations()) {
-            activity.storeInRetainedFragment(getMementoKey(), memento);
-        }
+    private String getMementoKey() {
+        return getClass().getName();
     }
 
-    abstract protected String getMementoKey();
-
-    protected void checkMementoForPendingInteractorResult() {
-        if (isMementoNotEmpty()) {
+    protected void checkMementoForPendingInteractorResponse() {
+        if (isInteractorResponseMementoNotEmpty()) {
             processInteractorResponseAfterPause();
         } else {
             checkInteractorResponseAfterConfigurationChange();
@@ -122,7 +138,7 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
     }
 
     private void processInteractorResponseAfterPause() {
-        Subscription subscription = memento.resubscribe(this);
+        Subscription subscription = interactorResponseMemento.handleResonse(this);
         interactorSubscriptions.add(subscription);
     }
 
@@ -130,11 +146,11 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
         ActivityView activity = getActivityView();
 
         @SuppressWarnings("unchecked")
-        Memento<BasePresenter<V, L>, ?> memento =
-                activity.retrieveFromRetainedFragment(Memento.class, getMementoKey());
+        InteractorResponseMemento<BasePresenter<V, L>, ?> responseMemento =
+                activity.retrieveFromRetainedFragment(InteractorResponseMemento.class, getMementoKey());
 
-        if (memento != null) {
-            memento.resubscribe(this);
+        if (responseMemento != null) {
+            responseMemento.handleResonse(this);
         }
     }
 }
