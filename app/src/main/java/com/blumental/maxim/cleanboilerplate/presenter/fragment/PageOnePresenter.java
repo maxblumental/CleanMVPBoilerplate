@@ -11,7 +11,7 @@ public class PageOnePresenter extends BaseFragmentPresenter<PageOneView, TabsVie
 
     @Override
     protected void onActivityMenuCreated() {
-        TabsView tabsView = getActivity();
+        TabsView tabsView = getActivityView();
 
         tabsView.getSearchQueryObservable()
                 .observeOn(AndroidSchedulers.mainThread())

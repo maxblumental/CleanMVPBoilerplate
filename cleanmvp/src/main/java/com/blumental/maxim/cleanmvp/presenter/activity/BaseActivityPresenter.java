@@ -42,4 +42,9 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
     public void onDestroy() {
         lifecycleSubscription.unsubscribe();
     }
+
+    @Override
+    public <R> void switchToActivity(Class<R> activityClass) {
+        view.switchToActivity(activityClass);
+    }
 }

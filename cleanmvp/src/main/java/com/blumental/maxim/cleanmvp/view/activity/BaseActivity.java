@@ -37,18 +37,15 @@ abstract public class BaseActivity<P extends ActivityPresenter<?>>
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        @SuppressWarnings("unchecked")
+        ActivityPresenter<ActivityView> presenter =
+                (ActivityPresenter<ActivityView>) getPresenter();
+
+        presenter.setView(this);
+
         lifecycleSubject = PublishSubject.create();
 
-        P presenter = getPresenter();
-
-        @SuppressWarnings("unchecked")
-        ActivityPresenter<ActivityView> presenter1 =
-                (ActivityPresenter<ActivityView>) presenter;
-
-        presenter1.setView(this);
-
-        presenter1.observeLifecycle(getLifecycleEvents());
-
+        presenter.observeLifecycle(getLifecycleEvents());
         lifecycleSubject.onNext(CREATE);
     }
 

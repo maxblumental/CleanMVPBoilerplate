@@ -32,7 +32,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
 
     @Override
     public void onActivityCreated() {
-        V activity = getActivity();
+        V activity = getActivityView();
 
         if (activity == null) {
             return;
@@ -74,7 +74,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     private void checkInteractorResponseAfterConfigurationChange() {
-        V activity = getActivity();
+        V activity = getActivityView();
 
         @SuppressWarnings("unchecked")
         Memento<BaseFragmentPresenter<T, V>, ?> memento =
@@ -98,7 +98,7 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
     }
 
     private void retainMemento() {
-        V activity = getActivity();
+        V activity = getActivityView();
 
         if (isMementoNotEmpty() && activity.isChangingConfigurations()) {
             activity.storeInRetainedFragment(MEMENTO_KEY, memento);
@@ -125,15 +125,16 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
         lifecycleSubscription.unsubscribe();
     }
 
-    protected V getActivity() {
-        return view.getActivityView();
-    }
-
-    protected <R> void switchToActivity(Class<R> activityClass) {
-        V activity = getActivity();
+    @Override
+    public <R> void switchToActivity(Class<R> activityClass) {
+        V activity = getActivityView();
 
         if (activity != null) {
             activity.switchToActivity(activityClass);
         }
+    }
+
+    protected V getActivityView() {
+        return view.getActivityView();
     }
 }
