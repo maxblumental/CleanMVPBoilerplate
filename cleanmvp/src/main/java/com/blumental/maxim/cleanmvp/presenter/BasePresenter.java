@@ -18,10 +18,11 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter<V, L> {
 
-    private final String INTERACTOR_MEMENTO_KEY = getClass().getName() + "interactor memento key";
+    private final String INTERACTOR_MEMENTO_KEY =
+            getClass().getSimpleName() + " interactor memento key";
 
     private final String INTERACTOR_RESPONSE_MEMENTO_KEY =
-            getClass().getName() + "interactor response memento key";
+            getClass().getSimpleName() + " interactor response memento key";
 
     protected V view;
 

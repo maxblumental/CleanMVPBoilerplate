@@ -62,6 +62,27 @@ abstract public class BaseActivity<P extends ActivityPresenter<?>>
     }
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        addRetainedFragment();
+    }
+
+    private void addRetainedFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        RetainedFragment fragment =
+                (RetainedFragment) fragmentManager.findFragmentByTag(RETAINED_FRAGMENT_TAG);
+
+        if (fragment == null) {
+            fragment = new RetainedFragment();
+
+            fragmentManager.beginTransaction()
+                    .add(fragment, RETAINED_FRAGMENT_TAG)
+                    .commit();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         lifecycleSubject.onNext(MENU_CREATED);
         return true;
@@ -116,11 +137,7 @@ abstract public class BaseActivity<P extends ActivityPresenter<?>>
                 (RetainedFragment) fragmentManager.findFragmentByTag(RETAINED_FRAGMENT_TAG);
 
         if (fragment == null) {
-            fragment = new RetainedFragment();
-
-            fragmentManager.beginTransaction()
-                    .add(fragment, RETAINED_FRAGMENT_TAG)
-                    .commit();
+            throw new IllegalStateException("Retained fragment was not added!");
         }
 
         fragment.saveObject(key, object);
