@@ -146,8 +146,6 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
         }
     }
 
-    abstract protected ActivityView getActivityView();
-
     protected void replayLastInteractor() {
         if (isInteractorMementoNotEmpty()) {
             launchInteractor(interactorMemento);
@@ -204,5 +202,5 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
         }
     }
 
-    abstract protected <R> void switchToActivity(Class<R> activityClass);
+    abstract protected ActivityView getActivityView();
 }

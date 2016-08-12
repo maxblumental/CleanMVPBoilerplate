@@ -97,15 +97,6 @@ abstract public class BaseFragmentPresenter<T extends FragmentView<V>, V extends
         lifecycleSubscription.unsubscribe();
     }
 
-    @Override
-    protected <R> void switchToActivity(Class<R> activityClass) {
-        V activity = getActivityView();
-
-        if (activity != null) {
-            activity.switchToActivity(activityClass);
-        }
-    }
-
     protected V getActivityView() {
         return view.getActivityView();
     }

@@ -132,10 +132,10 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
     }
 
     private void handleGoToTabsButtonClick() {
-        switchToActivity(TabsActivity.class);
+        getActivityView().switchToActivity(TabsActivity.class);
     }
 
     private void handleGoToErrorServiceButtonClicks() {
-        switchToActivity(ErrorServiceActivity.class);
+        getActivityView().switchToActivity(ErrorServiceActivity.class);
     }
 }

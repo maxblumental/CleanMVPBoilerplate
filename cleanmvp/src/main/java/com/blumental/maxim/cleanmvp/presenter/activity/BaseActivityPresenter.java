@@ -49,11 +49,6 @@ abstract public class BaseActivityPresenter<V extends ActivityView>
         lifecycleSubscription.unsubscribe();
     }
 
-    @Override
-    protected <R> void switchToActivity(Class<R> activityClass) {
-        view.switchToActivity(activityClass);
-    }
-
     protected V getActivityView() {
         return view;
     }
