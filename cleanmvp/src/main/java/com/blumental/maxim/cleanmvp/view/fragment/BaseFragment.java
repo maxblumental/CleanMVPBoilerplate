@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blumental.maxim.cleanmvp.presenter.fragment.FragmentPresenter;
 import com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents;
+import com.blumental.maxim.cleanmvp.presenter.fragment.FragmentPresenter;
 import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 
 import rx.subjects.PublishSubject;
@@ -29,7 +29,6 @@ import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleE
 import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.RESUME;
 import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.START;
 import static com.blumental.maxim.cleanmvp.presenter.fragment.FragmentLifecycleEvents.STOP;
-import static java.lang.String.format;
 
 abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends ActivityView>
         extends Fragment implements FragmentView<V> {
@@ -158,23 +157,10 @@ abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends Act
     @Override
     public V getActivityView() {
 
-        try {
+        @SuppressWarnings("unchecked")
+        V activity = (V) getActivity();
 
-            @SuppressWarnings("unchecked")
-            V activity = (V) getActivity();
-
-            return activity;
-
-        } catch (ClassCastException exception) {
-
-            String fragmentClass = getClass().getSimpleName();
-            String activityClass = getActivity().getClass().getSimpleName();
-
-            String message = format("Wrong FragmentView parametrization! %s is not hosted by %s",
-                    fragmentClass, activityClass);
-
-            throw new IllegalStateException(message, exception);
-        }
+        return activity;
     }
 
     @Override
