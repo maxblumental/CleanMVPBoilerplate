@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.activity;
+package com.blumental.maxim.cleanboilerplate.view.activity.tabs;
 
 import com.blumental.maxim.cleanmvp.view.activity.ActivityView;
 

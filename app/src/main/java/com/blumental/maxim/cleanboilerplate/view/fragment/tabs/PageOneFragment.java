@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.fragment;
+package com.blumental.maxim.cleanboilerplate.view.fragment.tabs;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blumental.maxim.cleanboilerplate.R;
-import com.blumental.maxim.cleanboilerplate.presenter.fragment.PageOnePresenter;
-import com.blumental.maxim.cleanboilerplate.view.activity.TabsView;
+import com.blumental.maxim.cleanboilerplate.presenter.fragment.tabs.PageOnePresenter;
+import com.blumental.maxim.cleanboilerplate.view.activity.tabs.TabsView;
 import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
 import butterknife.BindView;

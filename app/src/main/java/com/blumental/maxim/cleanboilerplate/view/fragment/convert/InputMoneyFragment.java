@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.fragment;
+package com.blumental.maxim.cleanboilerplate.view.fragment.convert;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.blumental.maxim.cleanboilerplate.R;
-import com.blumental.maxim.cleanboilerplate.presenter.fragment.InputMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
+import com.blumental.maxim.cleanboilerplate.presenter.fragment.convert.InputMoneyPresenter;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
 import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
@@ -44,6 +44,9 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
 
     @BindView(R.id.go_to_error_service_button)
     Button goToErrorServiceButton;
+
+    @BindView(R.id.go_to_nested_fragments_button)
+    Button goToNestedFragmentsButton;
 
     @BindView(R.id.currencySpinner)
     Spinner currencySpinner;
@@ -153,5 +156,10 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
     @Override
     public Observable<Void> getGoToErrorServiceButtonClicks() {
         return clicks(goToErrorServiceButton);
+    }
+
+    @Override
+    public Observable<Void> getGoToNestedFragmentsButtonClicks() {
+        return clicks(goToNestedFragmentsButton);
     }
 }

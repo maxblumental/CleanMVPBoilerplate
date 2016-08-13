@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.activity;
+package com.blumental.maxim.cleanboilerplate.view.activity.error;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

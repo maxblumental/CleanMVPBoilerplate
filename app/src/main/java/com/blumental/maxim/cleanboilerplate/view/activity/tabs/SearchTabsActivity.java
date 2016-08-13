@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.activity;
+package com.blumental.maxim.cleanboilerplate.view.activity.tabs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.presenter.activity.TabsPresenter;
-import com.blumental.maxim.cleanboilerplate.view.adapter.TabsAdapter;
+import com.blumental.maxim.cleanboilerplate.view.adapter.SearchTabsAdapter;
 import com.blumental.maxim.cleanmvp.view.activity.BaseActivity;
 
 import butterknife.BindView;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
-public class TabsActivity extends BaseActivity<TabsPresenter> implements TabsView {
+public class SearchTabsActivity extends BaseActivity<TabsPresenter> implements TabsView {
 
     private PublishSubject<String> searchQuerySubject;
 
@@ -49,7 +49,7 @@ public class TabsActivity extends BaseActivity<TabsPresenter> implements TabsVie
     }
 
     private void initializeViewPager() {
-        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
+        SearchTabsAdapter adapter = new SearchTabsAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
         tabLayout.addTab(tabLayout.newTab().setText("Page 1"));

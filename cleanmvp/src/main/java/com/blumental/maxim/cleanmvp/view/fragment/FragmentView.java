@@ -11,4 +11,6 @@ public interface FragmentView<V extends ActivityView> {
     Bundle getArguments();
 
     V getActivityView();
+
+    FragmentView<V> getContainerFragmentView();
 }

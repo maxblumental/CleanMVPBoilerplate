@@ -1,7 +1,7 @@
 package com.blumental.maxim.cleanboilerplate.presenter.activity;
 
 import com.blumental.maxim.cleanboilerplate.interactor.ErrorServiceInteractor;
-import com.blumental.maxim.cleanboilerplate.view.activity.ErrorServiceView;
+import com.blumental.maxim.cleanboilerplate.view.activity.error.ErrorServiceView;
 import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
 import com.blumental.maxim.cleanmvp.presenter.activity.BaseActivityPresenter;
 

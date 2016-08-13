@@ -176,4 +176,11 @@ abstract public class BaseFragment<T extends FragmentPresenter<?>, V extends Act
             throw new IllegalStateException(message, exception);
         }
     }
+
+    @Override
+    public FragmentView<V> getContainerFragmentView() {
+        @SuppressWarnings("unchecked")
+        FragmentView<V> parentFragment = (FragmentView<V>) getParentFragment();
+        return parentFragment;
+    }
 }

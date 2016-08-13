@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.activity;
+package com.blumental.maxim.cleanboilerplate.view.activity.convert;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.presenter.activity.MainPresenter;
-import com.blumental.maxim.cleanboilerplate.view.fragment.InputMoneyFragment;
+import com.blumental.maxim.cleanboilerplate.view.fragment.convert.InputMoneyFragment;
 import com.blumental.maxim.cleanmvp.view.activity.BaseActivity;
 
 import java.util.List;

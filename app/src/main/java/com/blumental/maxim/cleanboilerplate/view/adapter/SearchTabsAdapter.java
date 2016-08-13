@@ -4,14 +4,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.blumental.maxim.cleanboilerplate.view.fragment.PageOneFragment;
-import com.blumental.maxim.cleanboilerplate.view.fragment.PageTwoFragment;
+import com.blumental.maxim.cleanboilerplate.view.fragment.tabs.PageOneFragment;
+import com.blumental.maxim.cleanboilerplate.view.fragment.tabs.PageTwoFragment;
 
-public class TabsAdapter extends FragmentPagerAdapter {
+public class SearchTabsAdapter extends FragmentPagerAdapter {
 
     private static final int TABS_NUMBER = 2;
 
-    public TabsAdapter(FragmentManager fm) {
+    public SearchTabsAdapter(FragmentManager fm) {
         super(fm);
     }
 

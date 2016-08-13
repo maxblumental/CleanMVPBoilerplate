@@ -1,10 +1,10 @@
-package com.blumental.maxim.cleanboilerplate.presenter.fragment;
+package com.blumental.maxim.cleanboilerplate.presenter.fragment.convert;
 
 import android.os.Bundle;
 
 import com.blumental.maxim.cleanboilerplate.model.Money;
-import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
-import com.blumental.maxim.cleanboilerplate.view.fragment.ConvertedMoneyView;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
+import com.blumental.maxim.cleanboilerplate.view.fragment.convert.ConvertedMoneyView;
 import com.blumental.maxim.cleanmvp.presenter.fragment.BaseFragmentPresenter;
 
 import java.util.ArrayList;

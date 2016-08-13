@@ -1,4 +1,4 @@
-package com.blumental.maxim.cleanboilerplate.view.fragment;
+package com.blumental.maxim.cleanboilerplate.view.fragment.convert;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.model.Money;
-import com.blumental.maxim.cleanboilerplate.presenter.fragment.ConvertedMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.view.activity.MainView;
+import com.blumental.maxim.cleanboilerplate.presenter.fragment.convert.ConvertedMoneyPresenter;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.ConvertedMoneyAdapter;
 import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
