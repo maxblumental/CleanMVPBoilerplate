@@ -21,6 +21,12 @@ import static com.jakewharton.rxbinding.view.RxView.clicks;
 
 public class ErrorServiceActivity extends BaseActivity<ErrorServicePresenter> implements ErrorServiceView {
 
+    private final static String ERROR_VIEW_VISIBLE_KEY = "error view visible key";
+
+    private final static String PROGRESS_KEY = "progress key";
+
+    private final static String RESPONSE_KEY = "response key";
+
     @BindView(R.id.sendRequestButton)
     Button sendRequestButton;
 
@@ -46,6 +52,31 @@ public class ErrorServiceActivity extends BaseActivity<ErrorServicePresenter> im
         super.onCreate(savedInstanceState);
         setContentView(R.layout.error_service_activity);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(ERROR_VIEW_VISIBLE_KEY, errorView.getVisibility() == VISIBLE);
+        outState.putBoolean(PROGRESS_KEY, progressBar.getVisibility() == VISIBLE);
+        outState.putString(RESPONSE_KEY, responseTextView.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            return;
+        }
+
+        boolean isErrorViewVisible = savedInstanceState.getBoolean(ERROR_VIEW_VISIBLE_KEY);
+        errorView.setVisibility(isErrorViewVisible ? VISIBLE : GONE);
+
+        boolean isProgressVisible = savedInstanceState.getBoolean(PROGRESS_KEY);
+        progressBar.setVisibility(isProgressVisible ? VISIBLE : GONE);
+
+        responseTextView.setText(savedInstanceState.getString(RESPONSE_KEY));
     }
 
     @Override

@@ -33,6 +33,10 @@ import static com.jakewharton.rxbinding.view.RxView.clicks;
 
 public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainView> implements InputMoneyView {
 
+    private static final String PROGRESS_KEY = "progress key";
+
+    private static final String CONVERT_BUTTON_ENABLED_KEY = "convert button enabled key";
+
     @BindView(R.id.amountEditText)
     EditText amount;
 
@@ -72,6 +76,28 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
         currencySpinner.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(PROGRESS_KEY, progressBar.getVisibility() == VISIBLE);
+        outState.putBoolean(CONVERT_BUTTON_ENABLED_KEY, convertButton.isEnabled());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            return;
+        }
+
+        boolean isProgressVisible = savedInstanceState.getBoolean(PROGRESS_KEY);
+        progressBar.setVisibility(isProgressVisible ? VISIBLE : GONE);
+
+        boolean convertButtonEnabled = savedInstanceState.getBoolean(CONVERT_BUTTON_ENABLED_KEY);
+        convertButton.setEnabled(convertButtonEnabled);
     }
 
     @Override
