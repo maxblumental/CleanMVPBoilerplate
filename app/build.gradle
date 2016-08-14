@@ -3,7 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.1"
     defaultConfig {
         applicationId "com.blumental.maxim.cleanboilerplate"
         minSdkVersion 14
@@ -16,6 +16,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res/layout/activity',
+                    'src/main/res/layout/fragment',
+                    'src/main/res/layout/other_views',
+                    'src/main/res/layout',
+                    'src/main/res'
+            ]
         }
     }
 }
