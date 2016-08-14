@@ -185,6 +185,8 @@ public abstract class BasePresenter<V, L extends Lifecycle> implements Presenter
                 activity.retrieveFromRetainedFragment(
                         InteractorResponseMemento.class, INTERACTOR_RESPONSE_MEMENTO_KEY);
 
+        interactorResponseMemento = responseMemento;
+
         if (responseMemento != null) {
             responseMemento.handleResonse(this);
         }
