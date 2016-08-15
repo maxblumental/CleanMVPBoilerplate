@@ -5,7 +5,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
     defaultConfig {
-        applicationId "com.blumental.maxim.cleanboilerplate"
+        applicationId "com.maxblumental.cleanboilerplate"
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
