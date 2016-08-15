@@ -1,9 +1,9 @@
 package com.blumental.maxim.cleanboilerplate.presenter.activity;
 
-import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.ExchangeRatesView;
 import com.blumental.maxim.cleanmvp.presenter.activity.BaseActivityPresenter;
 
-public class MainPresenter extends BaseActivityPresenter<MainView> {
+public class ExchangeRatesPresenter extends BaseActivityPresenter<ExchangeRatesView> {
 
     @Override
     public void onResume() {

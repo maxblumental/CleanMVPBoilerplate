@@ -16,7 +16,7 @@ import android.widget.Spinner;
 
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.presenter.fragment.convert.InputMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.ExchangeRatesView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.CurrencyAdapter;
 import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
@@ -31,7 +31,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static com.jakewharton.rxbinding.view.RxView.clicks;
 
-public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainView> implements InputMoneyView {
+public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, ExchangeRatesView> implements InputMoneyView {
 
     private static final String PROGRESS_KEY = "progress key";
 
@@ -42,15 +42,6 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
 
     @BindView(R.id.convertButton)
     Button convertButton;
-
-    @BindView(R.id.go_to_tabs_button)
-    Button goToTabsButton;
-
-    @BindView(R.id.go_to_error_service_button)
-    Button goToErrorServiceButton;
-
-    @BindView(R.id.go_to_nested_fragments_button)
-    Button goToNestedFragmentsButton;
 
     @BindView(R.id.currencySpinner)
     Spinner currencySpinner;
@@ -81,6 +72,11 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if (progressBar == null || convertButton == null) {
+            outState.putBoolean(PROGRESS_KEY, false);
+            outState.putBoolean(CONVERT_BUTTON_ENABLED_KEY, true);
+            return;
+        }
         outState.putBoolean(PROGRESS_KEY, progressBar.getVisibility() == VISIBLE);
         outState.putBoolean(CONVERT_BUTTON_ENABLED_KEY, convertButton.isEnabled());
     }
@@ -172,20 +168,5 @@ public class InputMoneyFragment extends BaseFragment<InputMoneyPresenter, MainVi
     @Override
     public Observable<Void> getConvertButtonClicks() {
         return clicks(convertButton);
-    }
-
-    @Override
-    public Observable<Void> getGoToTabsClicks() {
-        return clicks(goToTabsButton);
-    }
-
-    @Override
-    public Observable<Void> getGoToErrorServiceButtonClicks() {
-        return clicks(goToErrorServiceButton);
-    }
-
-    @Override
-    public Observable<Void> getGoToNestedFragmentsButtonClicks() {
-        return clicks(goToNestedFragmentsButton);
     }
 }

@@ -6,14 +6,11 @@ import android.support.annotation.NonNull;
 import com.blumental.maxim.cleanboilerplate.interactor.ConvertToAllCurrenciesInteractor;
 import com.blumental.maxim.cleanboilerplate.mapper.ConvertedMoneyToBundle;
 import com.blumental.maxim.cleanboilerplate.model.Money;
-import com.blumental.maxim.cleanboilerplate.view.activity.error.ErrorServiceActivity;
-import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
-import com.blumental.maxim.cleanboilerplate.view.activity.nested.NestedFragmentsActivity;
-import com.blumental.maxim.cleanboilerplate.view.activity.tabs.SearchTabsActivity;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.ExchangeRatesView;
 import com.blumental.maxim.cleanboilerplate.view.fragment.convert.ConvertedMoneyFragment;
 import com.blumental.maxim.cleanboilerplate.view.fragment.convert.InputMoneyView;
-import com.blumental.maxim.cleanmvp.presenter.fragment.BaseFragmentPresenter;
 import com.blumental.maxim.cleanmvp.presenter.SubscriberFactory;
+import com.blumental.maxim.cleanmvp.presenter.fragment.BaseFragmentPresenter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +19,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, MainView> {
+public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, ExchangeRatesView> {
 
     @Override
     public void onResume() {
@@ -38,30 +35,6 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
                     @Override
                     public void call(Void aVoid) {
                         handleConvertButtonClick();
-                    }
-                });
-
-        observeClicks(view.getGoToTabsClicks(),
-                new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        handleGoToTabsButtonClick();
-                    }
-                });
-
-        observeClicks(view.getGoToErrorServiceButtonClicks(),
-                new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        handleGoToErrorServiceButtonClicks();
-                    }
-                });
-
-        observeClicks(view.getGoToNestedFragmentsButtonClicks(),
-                new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        handleGoToNestedFragmentsButtonClicks();
                     }
                 });
     }
@@ -139,17 +112,5 @@ public class InputMoneyPresenter extends BaseFragmentPresenter<InputMoneyView, M
             return presenter.createConvertToAllCurrenciesSubscriber();
         }
 
-    }
-
-    private void handleGoToTabsButtonClick() {
-        getActivityView().switchToActivity(SearchTabsActivity.class);
-    }
-
-    private void handleGoToErrorServiceButtonClicks() {
-        getActivityView().switchToActivity(ErrorServiceActivity.class);
-    }
-
-    private void handleGoToNestedFragmentsButtonClicks() {
-        view.getActivityView().switchToActivity(NestedFragmentsActivity.class);
     }
 }

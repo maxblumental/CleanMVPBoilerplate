@@ -11,16 +11,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.convert.MainActivity">
+        <activity
+            android:name=".view.activity.convert.ExchangeRatesActivity"
+            android:label="Exchange rates" />
+        <activity
+            android:name=".view.activity.tabs.SearchTabsActivity"
+            android:label="Search view" />
+        <activity
+            android:name=".view.activity.error.ErrorServiceActivity"
+            android:label="Error service" />
+        <activity
+            android:name=".view.activity.nested.NestedFragmentsActivity"
+            android:label="Tabs" />
+        <activity android:name=".view.activity.start.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.tabs.SearchTabsActivity" />
-        <activity android:name=".view.activity.error.ErrorServiceActivity" />
-        <activity android:name=".view.activity.nested.NestedFragmentsActivity" />
     </application>
 
 </manifest>

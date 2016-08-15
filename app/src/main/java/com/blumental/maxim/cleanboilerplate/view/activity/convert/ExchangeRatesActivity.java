@@ -5,18 +5,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.blumental.maxim.cleanboilerplate.R;
-import com.blumental.maxim.cleanboilerplate.presenter.activity.MainPresenter;
+import com.blumental.maxim.cleanboilerplate.presenter.activity.ExchangeRatesPresenter;
 import com.blumental.maxim.cleanboilerplate.view.fragment.convert.InputMoneyFragment;
 import com.blumental.maxim.cleanmvp.view.activity.BaseActivity;
 
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainView {
+public class ExchangeRatesActivity extends BaseActivity<ExchangeRatesPresenter> implements ExchangeRatesView {
 
     @Override
-    protected MainPresenter getPresenter() {
-        return new MainPresenter();
+    protected ExchangeRatesPresenter getPresenter() {
+        return new ExchangeRatesPresenter();
     }
 
     @Override

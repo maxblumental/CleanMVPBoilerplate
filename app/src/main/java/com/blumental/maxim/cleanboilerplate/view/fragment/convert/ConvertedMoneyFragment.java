@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.blumental.maxim.cleanboilerplate.R;
 import com.blumental.maxim.cleanboilerplate.model.Money;
 import com.blumental.maxim.cleanboilerplate.presenter.fragment.convert.ConvertedMoneyPresenter;
-import com.blumental.maxim.cleanboilerplate.view.activity.convert.MainView;
+import com.blumental.maxim.cleanboilerplate.view.activity.convert.ExchangeRatesView;
 import com.blumental.maxim.cleanboilerplate.view.adapter.ConvertedMoneyAdapter;
 import com.blumental.maxim.cleanmvp.view.fragment.BaseFragment;
 
@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ConvertedMoneyFragment extends BaseFragment<ConvertedMoneyPresenter, MainView> implements ConvertedMoneyView {
+public class ConvertedMoneyFragment extends BaseFragment<ConvertedMoneyPresenter, ExchangeRatesView> implements ConvertedMoneyView {
 
     @BindView(R.id.amountTextView)
     TextView amount;
